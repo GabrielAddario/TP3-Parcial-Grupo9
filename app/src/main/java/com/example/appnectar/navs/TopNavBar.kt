@@ -59,8 +59,13 @@ fun TopNavbar(titleText: String) {
                         onClick = { /* Acción */ }
                     )
                 }
-                //Spacer(modifier = Modifier.weight(1f))
-                Text(titleText, modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.weight(0.25f))
+                Text(
+                    titleText,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.weight(0.5f))
             }
         }
     )
