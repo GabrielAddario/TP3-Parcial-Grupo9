@@ -9,6 +9,7 @@ data class Product(
     val title: String,
     val price: Double,
     val description: String,
+    val category: com.example.appnectar.data.Category,
     val cant: Int,
     val typeSizes: TypeSizes,
     val stock: Int = 0
