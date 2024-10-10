@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.appnectar.screens.HomeScreenPreview
 import com.example.appnectar.screens.ProductDetailScreenPreview
 import com.example.appnectar.screens.SelectLocationScreenPreview
+import com.example.appnectar.screens.SignInScreenPreview
 import com.example.appnectar.screens.SignUpScreenPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
