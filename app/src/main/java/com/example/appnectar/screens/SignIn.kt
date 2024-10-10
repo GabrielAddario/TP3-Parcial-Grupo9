@@ -104,6 +104,7 @@ fun SignInScreen(navController: NavController) {
                onValueChange = { email = it },
                label = { Text("Email") },
                singleLine = true,
+               keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                modifier = Modifier
                    .fillMaxWidth()
                    .background(Transparent),
@@ -176,7 +177,7 @@ fun SignInScreen(navController: NavController) {
 fun loginUser(email: String, password: String, context: android.content.Context, navController: NavController) {
     if (email == "mor_2314" && password == "83r5^_") {
         Toast.makeText(context, "Login successful!", Toast.LENGTH_LONG).show()
-        navController.navigate("onboarding")
+        navController.navigate("location_screen")
     } else {
         Toast.makeText(context, "Invalid credentials.", Toast.LENGTH_SHORT).show()
     }
