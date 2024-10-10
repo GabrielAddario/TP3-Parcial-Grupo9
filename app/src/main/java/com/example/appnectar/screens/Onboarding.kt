@@ -79,7 +79,6 @@ fun Onboarding(navController: NavController) {
                         color = Gray,
                         fontSize = 16.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.shadow(4.dp, RoundedCornerShape(4.dp))
                     )
                     Spacer(modifier = Modifier.height(30.dp))
                     Button(
@@ -96,7 +95,6 @@ fun Onboarding(navController: NavController) {
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.shadow(4.dp)
                         )
                     }
                 }
