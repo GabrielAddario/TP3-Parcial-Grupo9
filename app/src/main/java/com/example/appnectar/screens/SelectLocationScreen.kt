@@ -157,6 +157,6 @@ fun SelectLocationScreen(navController: NavController) {
 }
 
 fun navigateHomeScreen(navController: NavController) {
-    navController.navigate("onboarding") {
+    navController.navigate("home_screen") {
     }
 }

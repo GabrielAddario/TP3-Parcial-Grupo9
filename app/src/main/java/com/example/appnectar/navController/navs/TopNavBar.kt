@@ -1,4 +1,4 @@
-package com.example.appnectar.navs
+package com.example.appnectar.navController.navs
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

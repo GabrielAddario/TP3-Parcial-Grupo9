@@ -20,6 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+
+@Composable
+fun ProductDetailScreenPreview(navController: NavController) {
+    ProductDetailScreen()
+}
 
 @Composable
 fun ProductDetailScreen() {
@@ -208,15 +214,9 @@ fun ProductDetailScreen() {
                 .fillMaxWidth()
                 .height(48.dp),
             shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00A86B))
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175))
         ) {
             Text(text = "Add To Basket", fontSize = 16.sp)
         }
     }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun ProductDetailScreenPreview() {
-    ProductDetailScreen()
 }

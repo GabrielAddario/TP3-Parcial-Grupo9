@@ -1,4 +1,4 @@
-package com.example.appnectar.data
+package com.example.appnectar.dataClass
 
 import androidx.compose.ui.graphics.Color
 import com.example.appnectar.R

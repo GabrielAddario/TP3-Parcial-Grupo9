@@ -1,4 +1,4 @@
-package com.example.appnectar.data
+package com.example.appnectar.dataClass
 
 enum class TypeSizes {
     ml,

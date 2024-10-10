@@ -1,15 +1,10 @@
-package com.example.appnectar
+package com.example.appnectar.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,25 +25,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.appnectar.data.BestSelling
-import com.example.appnectar.data.ExclusiveOffer
-import com.example.appnectar.data.Product
-import com.example.appnectar.navs.TopNavbar
+import androidx.navigation.NavController
+import com.example.appnectar.R
+import com.example.appnectar.dataClass.BestSelling
+import com.example.appnectar.dataClass.ExclusiveOffer
+import com.example.appnectar.dataClass.Product
+import com.example.appnectar.navController.navs.TopNavbar
 
-class HomeScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            HomeScreenContent()
-        }
-    }
+
+@Composable
+fun HomeScreenPreview(navController: NavController) {
+    HomeScreenContent(navController)
 }
 
 @Composable
-fun HomeScreenContent() {
+fun HomeScreenContent(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
@@ -89,7 +83,7 @@ fun HomeScreenContent() {
             )
             Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
                 ExclusiveOffer.forEach { product ->
-                    ProductCard(product)
+                    ProductCard(product, navController)
                 }
             }
 
@@ -102,7 +96,7 @@ fun HomeScreenContent() {
             )
             Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
                 BestSelling.forEach { product ->
-                    ProductCard(product)
+                    ProductCard(product, navController)
                 }
             }
         }
@@ -110,7 +104,7 @@ fun HomeScreenContent() {
 }
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(product: Product, navController: NavController) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
@@ -136,7 +130,8 @@ fun ProductCard(product: Product) {
                     contentDescription = product.title,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .clickable { navigateProductDetails(navController) },
                     contentScale = ContentScale.Fit
                 )
             }
@@ -178,17 +173,15 @@ fun ProductCard(product: Product) {
                     contentDescription = "Button",
                     modifier = Modifier
                         .size(45.dp)
-                        .clickable { /* Add button functionality here */ }
+                        .clickable { /* Hay que agregar el producto al carrito*/ }
                 )
             }
         }
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreenContent()
+fun navigateProductDetails(navController: NavController) {
+    navController.navigate("product_details") {
+    }
 }
 

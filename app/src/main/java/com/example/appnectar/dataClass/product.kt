@@ -1,4 +1,4 @@
-package com.example.appnectar.data
+package com.example.appnectar.dataClass
 
 import androidx.compose.runtime.Immutable
 
@@ -9,7 +9,7 @@ data class Product(
     val title: String,
     val price: Double,
     val description: String,
-    val category: com.example.appnectar.data.Category,
+    val category: Category,
     val cant: Int,
     val typeSizes: TypeSizes,
     val stock: Int = 0

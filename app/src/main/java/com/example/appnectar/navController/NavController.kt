@@ -4,6 +4,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appnectar.screens.HomeScreenPreview
+import com.example.appnectar.screens.ProductDetailScreenPreview
 import com.example.appnectar.screens.SelectLocationScreenPreview
 import com.example.appnectar.screens.SignUpScreenPreview
 import kotlinx.coroutines.delay
@@ -18,6 +20,8 @@ fun NavController() {
         composable("sign_in") { SignInScreenPreview(navController) }
         composable("sign_up") { SignUpScreenPreview(navController) }
         composable("location_screen") { SelectLocationScreenPreview(navController) }
+        composable("home_screen") { HomeScreenPreview(navController) }
+        composable("product_details") { ProductDetailScreenPreview(navController) }
     }
 }
 
