@@ -18,6 +18,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -91,7 +92,7 @@ fun SignInScreen(navController: NavController) {
                text = "Enter your emails and password",
                fontSize = 19.sp,
                fontWeight = FontWeight.Medium,
-               color = Transparent,
+               color = Color.Gray,
                modifier = Modifier.fillMaxWidth(),
                textAlign = TextAlign.Start
            )
@@ -133,7 +134,7 @@ fun SignInScreen(navController: NavController) {
 
            Text(
                text = "Forgot Password?",
-               color = Transparent,
+               color = Color.Gray,
                fontSize = 14.sp,
                modifier = Modifier
                    .align(Alignment.End)
