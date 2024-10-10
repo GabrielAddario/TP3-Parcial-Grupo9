@@ -1,7 +1,3 @@
-
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,20 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.appnectar.R
 
-class Onboarding : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            OnboardingFunc()
-        }
-    }
+@Composable
+fun OnboardingPreview(navController: NavController) {
+    Onboarding(navController)
 }
 
 @Composable
-fun OnboardingFunc() {
+fun Onboarding(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -91,7 +83,7 @@ fun OnboardingFunc() {
                     )
                     Spacer(modifier = Modifier.height(30.dp))
                     Button(
-                        onClick = {},
+                        onClick = {navigateOnboarding(navController)},
                         shape = RoundedCornerShape(30),
                         colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                         contentPadding = PaddingValues(),
@@ -112,8 +104,7 @@ fun OnboardingFunc() {
         }
     }
 
-@Preview(showBackground = true)
-@Composable
-fun OnboardingPreview() {
-    OnboardingFunc()
+fun navigateOnboarding(navController: NavController) {
+    navController.navigate("sign_in") {
+    }
 }
