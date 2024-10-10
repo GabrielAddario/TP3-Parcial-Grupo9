@@ -1,4 +1,4 @@
-package com.example.appnectar
+package com.example.appnectar.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
