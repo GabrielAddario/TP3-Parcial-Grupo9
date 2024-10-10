@@ -21,7 +21,10 @@ fun NavController() {
         composable("sign_up") { SignUpScreenPreview(navController) }
         composable("location_screen") { SelectLocationScreenPreview(navController) }
         composable("home_screen") { HomeScreenPreview(navController) }
-        composable("product_details") { ProductDetailScreenPreview(navController) }
+        composable("product_details/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId")
+            ProductDetailScreenPreview(navController = navController, productId)
+        }
     }
 }
 

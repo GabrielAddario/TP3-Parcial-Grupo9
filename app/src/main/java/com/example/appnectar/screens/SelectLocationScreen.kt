@@ -5,14 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,18 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
 
-
 @Composable
 fun SelectLocationScreenPreview(navController: NavController) {
     SelectLocationScreen(navController)
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +66,7 @@ fun SelectLocationScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Dropdown para seleccionar el barrio
         Box {
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -84,7 +75,7 @@ fun SelectLocationScreen(navController: NavController) {
                 TextField(
                     modifier = Modifier
                         .menuAnchor()
-                        .clip(RoundedCornerShape(4.dp)) // Less rounded corners
+                        .clip(RoundedCornerShape(4.dp))
                         .background(color = Color.White)
                         .fillMaxWidth(),
                     value = selectedBarrio,
@@ -99,12 +90,12 @@ fun SelectLocationScreen(navController: NavController) {
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                     modifier = Modifier
-                        .clip(RoundedCornerShape(4.dp)) // Less rounded corners
+                        .clip(RoundedCornerShape(4.dp))
                         .background(color = Color.White)
                 ) {
                     barrios.forEachIndexed { index, text ->
                         DropdownMenuItem(
-                            text = { Text(text = text) },
+                            text = { Text(text = text, color = Color.Black) },
                             onClick = {
                                 selectedBarrio = barrios[index]
                                 expanded = false
@@ -124,37 +115,36 @@ fun SelectLocationScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        Box {
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = { expanded = !expanded }
-            ) {
-                TextField(
-                    value = area,
-                    onValueChange = { area = it },
-                    label = { Text("Area") },
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Transparent),
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-        Button(
-            onClick = {navigateHomeScreen(navController)},
+        // TextField para ingresar el área
+        TextField(
+            value = area,
+            onValueChange = { area = it },
+            label = { Text("Area") },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp) // Adjust the height of the button
-                .clip(RoundedCornerShape(0.dp)), // Less rounded corners
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175)) // Set button color to green
+                .background(Transparent)
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // Botón que navega a la pantalla de inicio
+        Button(
+            onClick = {
+                navigateHomeScreen(navController)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .clip(RoundedCornerShape(0.dp)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175))
         ) {
             Text(text = "Submit")
         }
     }
 }
+
 
 fun navigateHomeScreen(navController: NavController) {
     navController.navigate("home_screen") {

@@ -111,7 +111,8 @@ fun ProductCard(product: Product, navController: NavController) {
             .width(173.32.dp)
             .height(248.51.dp)
             .padding(end = 8.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(18.dp)),
+            .border(1.dp, Color.Gray, RoundedCornerShape(18.dp))
+            .clickable { navigateProductDetails(navController, product.id) },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -130,8 +131,7 @@ fun ProductCard(product: Product, navController: NavController) {
                     contentDescription = product.title,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
-                        .clickable { navigateProductDetails(navController) },
+                        .padding(8.dp),
                     contentScale = ContentScale.Fit
                 )
             }
@@ -180,8 +180,7 @@ fun ProductCard(product: Product, navController: NavController) {
     }
 }
 
-fun navigateProductDetails(navController: NavController) {
-    navController.navigate("product_details") {
-    }
+fun navigateProductDetails(navController: NavController, productId: Int) {
+    navController.navigate("product_details/$productId")
 }
 
