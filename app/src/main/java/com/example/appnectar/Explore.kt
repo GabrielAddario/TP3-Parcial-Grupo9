@@ -7,12 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,19 +101,37 @@ fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .fillMaxWidth()
+            .width(175.5.dp)
+            .height(189.11.dp)
             .padding(8.dp)
             .clickable { onClick() },
-        colors = CardDefaults.cardColors(containerColor = color)
+        colors = CardDefaults.cardColors(containerColor = category.color)
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .size(100.dp), // Hacer la tarjeta cuadrada
+                .fillMaxSize(), // Fill the card size
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(category.displayName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Image(
+                painter = painterResource(id = category.imageRes),
+                contentDescription = category.displayName,
+                modifier = Modifier.size(64.dp), // Adjust the size as needed
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.height(16.dp)) // Add space between image and text
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    category.displayName,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center // Center the text within the box
+                )
+            }
         }
     }
 }
