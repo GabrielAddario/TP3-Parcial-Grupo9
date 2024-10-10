@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class Product(
     val id: Int,
-    val image: String,
+    val image: Int,
     val title: String,
     val price: Double,
     val description: String,
