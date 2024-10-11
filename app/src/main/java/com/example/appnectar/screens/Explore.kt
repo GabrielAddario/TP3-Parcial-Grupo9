@@ -43,27 +43,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
-
+/*
 class Explore : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ExploreContent()
+            ExploreContent(navController)
         }
     }
 }
 
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExploreContent() {
+fun ExploreContent(navController: NavHostController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .padding(16.dp)) {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
@@ -79,9 +84,9 @@ fun ExploreContent() {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp) 
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
+                items(Category.entries.filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
                         category = category,
                         color = getCategoryColor(category),
@@ -150,9 +155,7 @@ fun getCategoryColor(category: Category): Color {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun ExplorePreview() {
-    ExploreContent()
+fun ExplorePreview(navController: NavHostController) {
+    ExploreContent(navController)
 }
-

@@ -2,11 +2,9 @@ package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,15 +19,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.appnectar.R
-import com.example.appnectar.dataClass.ExclusiveOffer
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
 import com.example.appnectar.dataClass.MyCarts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCartScreen() {
+fun MyCartScreen(navController: NavHostController) {
     val products = MyCarts // Use the product list from FakeData
     val colorDivider = Color(0xFFE2E2E2)
 
@@ -45,7 +44,7 @@ fun MyCartScreen() {
                 ) {
                     items(products) { product ->
                         ProductCard(product = product)
-                        Divider(color = colorDivider, thickness = 1.dp)
+                        HorizontalDivider(thickness = 1.dp, color = colorDivider)
                     }
                 }
             }
@@ -168,8 +167,7 @@ fun ProductCard(product: Product) {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun MyCartScreenPreview() {
-    MyCartScreen()
+fun MyCartScreenPreview(navController: NavHostController) {
+    MyCartScreen(navController = navController)
 }
