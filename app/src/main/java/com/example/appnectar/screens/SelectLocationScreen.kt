@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,14 @@ fun SelectLocationScreen(navController: NavController) {
     )
     var selectedBarrio by remember { mutableStateOf(barrios[0]) }
     var area by remember { mutableStateOf("") }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = R.drawable.fondo_signin),
+            contentDescription = "Backgraound Image",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
 
     Column(
         modifier = Modifier
@@ -142,6 +151,8 @@ fun SelectLocationScreen(navController: NavController) {
         ) {
             Text(text = "Submit")
         }
+    }
+
     }
 }
 

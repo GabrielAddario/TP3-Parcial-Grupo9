@@ -4,6 +4,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appnectar.navController.navs.MainScreen
 import com.example.appnectar.screens.HomeScreenPreview
 import com.example.appnectar.screens.ProductDetailScreenPreview
 import com.example.appnectar.screens.SelectLocationScreenPreview
@@ -21,6 +22,7 @@ fun NavController() {
         composable("sign_up") { SignUpScreenPreview(navController) }
         composable("location_screen") { SelectLocationScreenPreview(navController) }
         composable("home_screen") { HomeScreenPreview(navController) }
+        composable("main_screen") { MainScreen(navController) }
         composable("product_details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")
             ProductDetailScreenPreview(navController = navController, productId)

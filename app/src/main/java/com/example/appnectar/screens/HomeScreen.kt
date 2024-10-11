@@ -33,6 +33,7 @@ import com.example.appnectar.R
 import com.example.appnectar.dataClass.BestSelling
 import com.example.appnectar.dataClass.ExclusiveOffer
 import com.example.appnectar.dataClass.Product
+import com.example.appnectar.navController.navs.BottomNavBar
 import com.example.appnectar.navController.navs.TopNavbar
 
 
@@ -46,6 +47,7 @@ fun HomeScreenContent(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
+        bottomBar = { BottomNavBar(navController) } // Agregar la BottomNavBar aquí
     ) { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()

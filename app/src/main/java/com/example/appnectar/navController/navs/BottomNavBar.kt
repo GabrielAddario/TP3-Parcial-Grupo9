@@ -1,63 +1,60 @@
 package com.example.appnectar.navController.navs
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
-class BottomNavbar : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            BottomNavbarContent()
+@Composable
+fun BottomNavBar(navController: NavController) {
+    val items = listOf(
+        BottomNavItem.Shop,
+        BottomNavItem.Explore,
+        BottomNavItem.Cart,
+        BottomNavItem.Favourite,
+        BottomNavItem.Account
+    )
+    NavigationBar(
+        containerColor = Color.White,
+        contentColor = Color.Black,
+        modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+    ) {
+        val navBackStackEntry = navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry.value?.destination?.route
+        items.forEach { item ->
+            val isSelected = currentRoute == item.route
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        painter = painterResource(id = if (isSelected) item.iconResIdSelected else item.iconResId),
+                        contentDescription = item.title,
+                        modifier = Modifier.size(30.dp)
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        color = if (isSelected) Color(0xFF53B175) else Color.Black
+                    )
+                },
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BottomNavbarContent() {
-    /*
-    Scaffold(
-        bottomBar = {
-            BottomNavigation {
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(id = R.drawable.ic_cart), contentDescription = "Cart") },
-                    label = { Text("Cart") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
-                )
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(id = R.drawable.ic_shop), contentDescription = "Shop") },
-                    label = { Text("Shop") },
-                    selected = true,
-                    onClick = { /*TODO*/ }
-                )
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(id = R.drawable.ic_explore), contentDescription = "Explore") },
-                    label = { Text("Explore") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
-                )
-                BottomNavigationItem(
-                    icon = { Icon(painterResource(id = R.drawable.ic_account), contentDescription = "Account") },
-                    label = { Text("Account") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
-                )
-            }
-        }
-    ) {
-        // Content of the screen
-    }*/
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BottomNavbarPreview() {
-    BottomNavbarContent()
 }
