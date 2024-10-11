@@ -33,6 +33,7 @@ import com.example.appnectar.R
 import com.example.appnectar.dataClass.BestSelling
 import com.example.appnectar.dataClass.ExclusiveOffer
 import com.example.appnectar.dataClass.Product
+import com.example.appnectar.navController.navs.BottomNavBar
 import com.example.appnectar.navController.navs.TopNavbar
 
 
@@ -46,6 +47,7 @@ fun HomeScreenContent(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
+        bottomBar = { BottomNavBar(navController) } // Agregar la BottomNavBar aquí
     ) { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()
@@ -111,7 +113,8 @@ fun ProductCard(product: Product, navController: NavController) {
             .width(173.32.dp)
             .height(248.51.dp)
             .padding(end = 8.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(18.dp)),
+            .border(1.dp, Color.Gray, RoundedCornerShape(18.dp))
+            .clickable { navigateProductDetails(navController, product.id) },
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -130,8 +133,7 @@ fun ProductCard(product: Product, navController: NavController) {
                     contentDescription = product.title,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
-                        .clickable { navigateProductDetails(navController) },
+                        .padding(8.dp),
                     contentScale = ContentScale.Fit
                 )
             }
@@ -180,8 +182,7 @@ fun ProductCard(product: Product, navController: NavController) {
     }
 }
 
-fun navigateProductDetails(navController: NavController) {
-    navController.navigate("product_details") {
-    }
+fun navigateProductDetails(navController: NavController, productId: Int) {
+    navController.navigate("product_details/$productId")
 }
 
