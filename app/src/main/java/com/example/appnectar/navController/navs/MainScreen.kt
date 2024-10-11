@@ -13,7 +13,6 @@ fun MainScreen(navController: NavController) {
         bottomBar = { BottomNavBar(navController) }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-
         }
     }
 }
