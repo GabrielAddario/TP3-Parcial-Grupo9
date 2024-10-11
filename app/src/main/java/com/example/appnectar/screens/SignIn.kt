@@ -1,3 +1,5 @@
+package com.example.appnectar.screens
+
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,7 +20,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -32,9 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @Composable
 fun SignInScreenPreview(navController: NavController) {
@@ -145,7 +143,7 @@ fun SignInScreen(navController: NavController) {
            Spacer(modifier = Modifier.height(20.dp))
 
            Button(
-               onClick = {loginUser(email, password, context, navController) },
+               onClick = { loginUser(email, password, context, navController) },
                shape = RoundedCornerShape(30),
                colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                contentPadding = PaddingValues(),
@@ -161,13 +159,13 @@ fun SignInScreen(navController: NavController) {
            Spacer(modifier = Modifier.height(16.dp))
 
            Row {
-               Text(text = "Don't have an account?", fontSize = 14.sp, color = Color.Black, fontWeight = FontWeight.Medium,)
+               Text(text = "Don't have an account?", fontSize = 14.sp, color = Color.Black, fontWeight = FontWeight.Medium)
                Spacer(modifier = Modifier.width(4.dp))
                Text(
                    text = "Signup",
                    color = Color(0xFF53B175),
                    fontWeight = FontWeight.Bold,
-                   modifier = Modifier.clickable { navigateSignUp(navController)}
+                   modifier = Modifier.clickable { navigateSignUp(navController) }
                )
            }
        }
