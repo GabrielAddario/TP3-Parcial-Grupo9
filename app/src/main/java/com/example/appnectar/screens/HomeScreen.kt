@@ -38,12 +38,12 @@ import com.example.appnectar.navController.navs.TopNavbar
 
 
 @Composable
-fun HomeScreenPreview(navController: NavController) {
-    HomeScreenContent(navController)
+fun HomeScreenPreview(navController: NavController, barrio: String) {
+    HomeScreenContent(navController, barrio)
 }
 
 @Composable
-fun HomeScreenContent(navController: NavController) {
+fun HomeScreenContent(navController: NavController, barrio: String) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
@@ -55,7 +55,7 @@ fun HomeScreenContent(navController: NavController) {
             .padding(16.dp)) {
 
             Text(
-                text = "Dhaka, Banassre",
+                text = barrio,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray,

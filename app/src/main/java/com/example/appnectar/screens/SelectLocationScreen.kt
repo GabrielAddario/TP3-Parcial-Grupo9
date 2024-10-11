@@ -141,7 +141,7 @@ fun SelectLocationScreen(navController: NavController) {
         // Botón que navega a la pantalla de inicio
         Button(
             onClick = {
-                navigateHomeScreen(navController)
+                navigateHomeScreen(navController, selectedBarrio)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -150,14 +150,13 @@ fun SelectLocationScreen(navController: NavController) {
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175))
         ) {
             Text(text = "Submit")
+            }
         }
-    }
-
     }
 }
 
 
-fun navigateHomeScreen(navController: NavController) {
+fun navigateHomeScreen(navController: NavController, barrio: String) {
     navController.navigate("home_screen") {
     }
 }

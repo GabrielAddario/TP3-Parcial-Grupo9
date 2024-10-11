@@ -16,13 +16,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavController() {
     val navController = rememberNavController()
+    val selectBarrio = ""
     NavHost(navController = navController, startDestination = "splash_screen") {
         composable("splash_screen") { SplashScreen(navController) }
         composable("onboarding") { OnboardingPreview(navController) }
         composable("sign_in") { SignInScreenPreview(navController) }
         composable("sign_up") { SignUpScreenPreview(navController) }
         composable("location_screen") { SelectLocationScreenPreview(navController) }
-        composable("home_screen") { HomeScreenPreview(navController) }
+        composable("home_screen") { HomeScreenPreview(navController, selectBarrio) }
         composable("main_screen") { MainScreen(navController) }
         composable("product_details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")

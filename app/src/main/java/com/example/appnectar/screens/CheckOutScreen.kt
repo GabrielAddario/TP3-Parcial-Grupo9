@@ -2,11 +2,14 @@ package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -26,54 +29,74 @@ import androidx.compose.ui.unit.sp
 import com.example.appnectar.R
 
 @Composable
+@Preview(showBackground = true)
+fun CheckoutScreenPreview() {
+    CheckOutScreen()
+}
+
+@Composable
 fun CheckOutScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f)),
-        contentAlignment = Alignment.BottomCenter
+            .background(Color.Transparent),
+        contentAlignment = Alignment.BottomCenter,
     ) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp),
+                .height(500.dp),
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             color = Color.White,
             shadowElevation = 8.dp
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(30.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "Checkout",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                HorizontalDivider(color = Color.Gray, thickness = 2.dp, modifier = Modifier.padding(top = 8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ){
+                    Text(
+                        text = "Checkout",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable(onClick = {}),
+                    )
+                }
+
+                HorizontalDivider(color = Color.LightGray, thickness = 2.dp, modifier = Modifier.padding(top = 8.dp))
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Delivery:", fontSize = 16.sp)
+                    Text(text = "Delivery", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.weight(1f))
                     Text(text = "Select Method", fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = "Arrow",
                         tint = Color.Gray,
                         modifier = Modifier.size(16.dp)
                     )
                 }
-                HorizontalDivider(color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(color = Color.LightGray, modifier = Modifier.padding(top = 8.dp))
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Payment:", fontSize = 16.sp)
+                    Text(text = "Payment", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
                         painter = painterResource(id = R.drawable.card_logo), // Reemplaza con el ID de tu imagen
@@ -82,47 +105,47 @@ fun CheckOutScreen() {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = "Arrow",
                         tint = Color.Gray,
                         modifier = Modifier.size(16.dp)
                     )
                 }
-                HorizontalDivider(color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(color = Color.LightGray, modifier = Modifier.padding(top = 8.dp))
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Promo Code:", fontSize = 16.sp)
+                    Text(text = "Promo Code", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.weight(1f))
                     Text(text = "Pick Discount", fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = "Arrow",
                         tint = Color.Gray,
                         modifier = Modifier.size(16.dp)
                     )
                 }
-                HorizontalDivider(color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(color = Color.LightGray, modifier = Modifier.padding(top = 8.dp))
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Total Cost:", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Total Cost", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.weight(1f))
                     Text(text = "$13.97", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = "Arrow",
                         tint = Color.Gray,
                         modifier = Modifier.size(16.dp)
                     )
                 }
-                HorizontalDivider(color = Color.Gray, modifier = Modifier.padding(top = 8.dp))
+                HorizontalDivider(color = Color.LightGray, modifier = Modifier.padding(top = 8.dp))
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     buildAnnotatedString {
@@ -135,25 +158,24 @@ fun CheckOutScreen() {
                             append("Conditions")
                         }
                     },
-                    fontSize = 12.sp,
+                    fontSize = 13.sp,
                     color = Color.Gray,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(8.dp)
                 )
                 Button(
-                    onClick = { /* No functionality */ },
+                    onClick = { },
+                    shape = RoundedCornerShape(30),
+                    colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
+                    contentPadding = PaddingValues(),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
+                        .size(width = 350.dp, height = 60.dp),
                 ) {
-                    Text(text = "Place Order", fontSize = 16.sp)
+                    Text(
+                        text = "Place Order",
+                        fontSize = 16.sp,
+                    )
                 }
             }
         }
     }
-}
-
-@Composable
-@Preview(showBackground = true)
-fun CheckoutScreenPreview() {
-    CheckOutScreen()
 }
