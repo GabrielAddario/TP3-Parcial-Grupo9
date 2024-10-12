@@ -1,5 +1,9 @@
 package com.example.appnectar.screens
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +45,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
+/*
+class Explore : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            ExploreContent(navController)
+        }
+    }
+}
+
+ */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
