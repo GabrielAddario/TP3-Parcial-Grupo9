@@ -69,7 +69,7 @@ fun ExploreContent() {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search Categories", fontSize = 15.sp, fontWeight = FontWeight.Light) },
+                label = { Text("Search.kt Categories", fontSize = 15.sp, fontWeight = FontWeight.Light) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),

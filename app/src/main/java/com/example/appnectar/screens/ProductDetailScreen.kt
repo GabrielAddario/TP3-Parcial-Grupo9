@@ -47,7 +47,7 @@ fun ProductDetailScreen(productId: String?) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Product Detail",
+                    text = "com.example.appnectar.screens.Product Detail",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -128,7 +128,7 @@ fun ProductDetailScreen(productId: String?) {
 
             // Descripción del producto
             Text(
-                text = "Product Detail",
+                text = "com.example.appnectar.screens.Product Detail",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )

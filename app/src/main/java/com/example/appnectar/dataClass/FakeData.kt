@@ -56,3 +56,12 @@ val MyCarts = listOf(
     Product(9, R.drawable.mayonesa, "Mayonesa", 34.5, "Mayonesa", Category.OTHER ,1, TypeSizes.kg, 10),
     Product(10, R.drawable.fideos, "Fideos", 32.0, "Fideos", Category.OTHER,1, TypeSizes.kg, 10),
 )
+
+val SearchCarts = listOf(
+    Product(4, R.drawable.egg_chicken_white, "Egg Chicken Red", 29.5, "4", Category.DAIRY_EGGS,1, TypeSizes.pcs, 10),
+    Product(3, R.drawable.manzana, "Manzana", 24.5, "180", Category.FRUITS_VEGETABLES,6, TypeSizes.g, 10),
+    Product(1, R.drawable.fideos, "Egg Pasta", 27.5, "30", Category.FRUITS_VEGETABLES, 2, TypeSizes.gm, 10),
+    Product(2, R.drawable.morron, "Morron", 10.0, "21", Category.FRUITS_VEGETABLES,350, TypeSizes.kg, 10),
+    Product(5, R.drawable.banana, "Banana", 15.0, "300", Category.FRUITS_VEGETABLES,350, TypeSizes.kg, 10),
+    Product(4, R.drawable.egg_chicken_white, "Egg Chicken Red", 29.5, "220", Category.DAIRY_EGGS,1, TypeSizes.pcs, 10),
+)

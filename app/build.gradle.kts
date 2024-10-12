@@ -51,6 +51,12 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.compose.material:material:1.5.0")
+    implementation ("androidx.compose.ui:ui:1.5.0")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.5.0")
+    implementation ("androidx.compose.foundation:foundation:1.5.0")
+    implementation ("androidx.navigation:navigation-compose:2.7.0")
+
     implementation("io.coil-kt:coil-compose:2.2.2")
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -76,6 +82,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.play.services.analytics.impl)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appnectar.navController.navs.MainScreen
-import com.example.appnectar.screens.ExploreContent
+import com.example.appnectar.screens.ExplorePreview
 import com.example.appnectar.screens.FavoritesScreenPreview
 import com.example.appnectar.screens.HomeScreenPreview
 import com.example.appnectar.screens.MyCartScreenPreview
@@ -32,8 +32,8 @@ fun NavController() {
         composable("location_screen") { SelectLocationScreenPreview(navController) }
         composable("home_screen") { HomeScreenPreview(navController, selectBarrio) }
         composable("main_screen") { MainScreen(navController) }
-        composable("my_cart_screen") { MainScreen(navController) { MyCartScreenPreview(navController) } }
-        composable("explore_screen") { MainScreen(navController) { ExploreContent(navController) } }
+        composable("my_cart_screen") { MainScreen(navController) { MyCartScreenPreview() } }
+        composable("explore_screen") { MainScreen(navController) { ExplorePreview() } }
         composable("favourite_screen"){ MainScreen(navController) { FavoritesScreenPreview(navController)} }
         composable("product_details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")

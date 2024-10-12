@@ -28,7 +28,7 @@ import com.example.appnectar.dataClass.MyCarts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCartScreen(navController: NavHostController) {
+fun MyCartScreen() {
     val products = MyCarts // Use the product list from FakeData
     val colorDivider = Color(0xFFE2E2E2)
 
@@ -167,7 +167,8 @@ fun ProductCard(product: Product) {
     }
 }
 
+@Preview
 @Composable
-fun MyCartScreenPreview(navController: NavHostController) {
-    MyCartScreen(navController = navController)
+fun MyCartScreenPreview() {
+    MyCartScreen()
 }
