@@ -1,3 +1,7 @@
+package com.example.appnectar.navController
+
+import OnboardingPreview
+import SplashScreenPreview
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController

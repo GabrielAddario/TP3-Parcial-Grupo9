@@ -59,7 +59,7 @@ fun MyCartScreen() {
                     .padding(16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
-                Text(text = "Track Order", color = Color.White, fontSize = 16.sp)
+                Text(text = "Go to Checkout", color = Color.White, fontSize = 16.sp)
             }
         }
     }

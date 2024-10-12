@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,7 +60,7 @@ fun FilterScreen() {
                         Icon(imageVector = Icons.Default.Close, contentDescription = "Cerrar")
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "Filters", style = MaterialTheme.typography.titleLarge)
+                    Text(text = "Filters", style = MaterialTheme.typography.titleLarge,  textAlign = TextAlign.Center)
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
@@ -72,7 +73,7 @@ fun FilterScreen() {
                     .fillMaxSize()
                     .background(
                         color = Color(0xFFeeeeee),
-                        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                        shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp)
                     ) // Fondo blanco eeeeee con esquinas superiores redondeadas
                     .padding(horizontal = 16.dp)
             ) {
@@ -87,7 +88,7 @@ fun FilterScreen() {
                             .padding(16.dp)
                     ) {
                         Column {
-                            Text(text = "Categories", style = MaterialTheme.typography.bodyLarge, fontSize = 22.sp)
+                            Text(text = "Categories", style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp)
                             Spacer(modifier = Modifier.height(8.dp))
                             val categories = listOf("Eggs", "Noodles & Pasta", "Chips & Crisps", "Fast Food")
                             categories.forEachIndexed { index, category ->
@@ -119,7 +120,7 @@ fun FilterScreen() {
                             .padding(16.dp)
                     ) {
                         Column {
-                            Text(text = "Brand", style = MaterialTheme.typography.bodyLarge, fontSize = 22.sp)
+                            Text(text = "Brand", style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp)
                             Spacer(modifier = Modifier.height(8.dp))
                             val brands = listOf("Individual Collection", "Cocola", "Ifad", "Kazi Farmas")
                             brands.forEachIndexed { index, brand ->
@@ -144,17 +145,20 @@ fun FilterScreen() {
                     }
 
                     // Spacer to add space between content and button
-                    Spacer(modifier = Modifier.height(210.dp))
+                    Spacer(modifier = Modifier.height(170.dp))
 
-                    // Apply Filter Button at the bottom
                     Button(
-                        onClick = { /* Apply filter action */ },
+                        onClick = { },
+                        shape = RoundedCornerShape(30),
+                        colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
+                        contentPadding = PaddingValues(),
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00A86B)) // Color verde para el botón
+                            .size(width = 350.dp, height = 60.dp),
                     ) {
-                        Text(text = "Apply Filter")
+                        Text(
+                            text = "Apply Filter",
+                            fontSize = 16.sp,
+                        )
                     }
 
                     // Box to select the white space below the button and make it light gray
@@ -173,15 +177,29 @@ fun FilterScreen() {
 @Composable
 fun RoundedCornerCheckbox(
     checked: Boolean,
-    onCheckedChange: ((Boolean) -> Unit)?
+    onCheckedChange: ((Boolean) -> Unit)?,
 ) {
-    Checkbox(
-        checked = checked,
-        onCheckedChange = onCheckedChange,
-        modifier = Modifier.background(Color.Transparent, shape = RoundedCornerShape(4.dp)),
-        colors = CheckboxDefaults.colors(checkedColor = Color(0xFF00A86B)) // Color verde para el tilde
-    )
+    Box(
+        modifier = Modifier
+            .background(
+                color = if (checked) Color(0xFF53B175) else Color.Transparent, // Fondo verde si está marcado
+                shape = RoundedCornerShape(20.dp) // Bordes redondeados
+            )
+            .padding(4.dp) // Añade un pequeño padding alrededor del checkbox
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            modifier = Modifier.size(30.dp), // Tamaño del checkbox
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color.White, // Color del tilde
+                uncheckedColor = Color.LightGray, // Color del borde cuando no está marcado
+                checkmarkColor = Color(0xFF53B175) // Color del checkmark cuando está marcado
+            )
+        )
+    }
 }
+
 
 @Composable
 @Preview(showBackground = true)
