@@ -8,12 +8,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,7 +35,7 @@ import com.example.appnectar.dataClass.Categories
 
 
 @Composable
-private fun FilterScreen(navController: NavController) {
+private fun FilterScreen() {
     var categoriesState by remember { mutableStateOf(listOf(false, false, false, false)) }
     var brandsState by remember { mutableStateOf(listOf(false, false, false, false)) }
 
@@ -66,8 +69,10 @@ private fun FilterScreen(navController: NavController) {
                         contentDescription = "Close",
                         tint = Color.Gray,
                         modifier = Modifier
-                            .size(18.dp)
-                            .clickable { navigateExploreScreen(navController) }
+                            .size(40.dp)
+                            .padding(start = 15.dp)
+                            .clickable { //navigateExploreScreen(navController)
+                            }
                             .align(Alignment.TopStart)
                     )
 
@@ -113,13 +118,14 @@ private fun FilterScreen(navController: NavController) {
                                             }
                                         }
                                     )
+                                    Spacer(modifier = Modifier.width(16.dp))
                                     Text(
                                         text = category,
                                         fontSize = 18.sp,
                                         color = if (categoriesState[index]) Color(0xFF53B175) else Color.Black
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(4.dp))
+                                Spacer(modifier = Modifier.height(8.dp))
                             }
                         }
                     }
@@ -145,6 +151,7 @@ private fun FilterScreen(navController: NavController) {
                                             }
                                         }
                                     )
+                                    Spacer(modifier = Modifier.width(16.dp))
                                     Text(
                                         text = brand,
                                         fontSize = 18.sp,
@@ -205,29 +212,31 @@ private fun RoundedCornerCheckbox(
         // Fondo redondeado
         Box(
             modifier = Modifier
-                .size(30.dp) // Tamaño del fondo
-                .background(color = if (checked) Color(0xFF53B175) else Color.Transparent, shape = RoundedCornerShape(4.dp))
+                .size(30.dp)
+                .background(color = if (checked) Color(0xFF53B175) else Color.Transparent)
                 .border(width = 2.dp, color = Color.LightGray)
         )
 
-        // Checkbox en el centro
         Checkbox(
             checked = checked,
-            onCheckedChange = null, // No maneja el cambio dentro del Checkbox
+            onCheckedChange = null,
             modifier = Modifier
-                .size(30.dp), // Tamaño del checkbox
+                .size(30.dp)
+                .border(2.dp, Color.LightGray, RoundedCornerShape(8.dp)),
             colors = CheckboxDefaults.colors(
-                checkedColor = Color.Transparent, // Sin color de fondo cuando está marcado
-                uncheckedColor = Color.Transparent, // Sin color de fondo cuando no está marcado
-                checkmarkColor = Color.White // Color del checkmark
+                checkedColor = Color.Transparent,
+                uncheckedColor = Color.Transparent,
+                checkmarkColor = Color.White
             )
         )
     }
 }
 
 
-
+@Preview
 @Composable
-fun FilterScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
-    FilterScreen(navController)
+fun FilterScreenPreview(
+    //navController: NavController
+) {
+    FilterScreen()
 }
