@@ -17,12 +17,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,9 +45,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
+import androidx.compose.material.*
+import androidx.navigation.NavController
 
 @Composable
-private fun ExploreContent() {
+private fun ExploreContent(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
@@ -51,25 +58,45 @@ private fun ExploreContent() {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search.kt Categories", fontSize = 15.sp, fontWeight = FontWeight.Light) },
+                placeholder = { Text("Search Store", fontSize = 15.sp, fontWeight = FontWeight.Light) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
-                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                },
+                trailingIcon = {
+                    IconButton(onClick = { navigateFilters(navController) }) {
+                        Icon(
+                            imageVector = Icons.Default.Tune, // Icono de configuración (puedes cambiarlo por otro)
+                            contentDescription = "Settings Icon"
+                        )
+                    }
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color(0xFFF5F5F5), // Color de fondo similar al de la imagen
+                    focusedIndicatorColor = Color.Transparent, // Sin indicador de foco
+                    unfocusedIndicatorColor = Color.Transparent, // Sin indicador no enfocado
+                    cursorColor = Color.Black // Color del cursor
+                )
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp) 
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
                         category = category,
                         color = getCategoryColor(category),
-                        onClick = {  }
+                        onClick = { }
                     )
                 }
             }
@@ -130,9 +157,13 @@ private fun getCategoryColor(category: Category): Color {
     }
 }
 
-@Preview(showBackground = true)
+private fun navigateFilters(navController: NavController) {
+    navController.navigate("filters") {
+    }
+}
+
 @Composable
-fun ExplorePreview() {
-    ExploreContent()
+fun ExplorePreview(navController: NavController) {
+    ExploreContent(navController)
 }
 

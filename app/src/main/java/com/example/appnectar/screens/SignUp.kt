@@ -170,7 +170,8 @@ private fun SignUpScreen(navController: NavController) {
                             response: retrofit2.Response<UserListItem>
                         ) {
                             if (response.isSuccessful && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                                Toast.makeText(context, "Sign In Successful", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
+                                navController.navigate("sign_in")
                             } else {
                                 Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                             }
@@ -211,10 +212,5 @@ private fun SignUpScreen(navController: NavController) {
 
 private fun navigateSignIn(navController: NavController) {
     navController.navigate("sign_in") {
-    }
-}
-
-private fun navigateScreenMain(navController: NavController) {
-    navController.navigate("") {
     }
 }

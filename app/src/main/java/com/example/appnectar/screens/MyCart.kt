@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -16,27 +18,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
 import com.example.appnectar.dataClass.MyCarts
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-private fun MyCartScreen() {
-    val products = MyCarts // Use the product list from FakeData
+private fun MyCartScreen(navController: NavController) {
+    val products = MyCarts
     val colorDivider = Color(0xFFE2E2E2)
 
     Scaffold(
         topBar = { TopNavbar("My Cart") },
     ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Divider(color = colorDivider, thickness = 1.dp)
                 LazyColumn(
@@ -49,13 +53,12 @@ private fun MyCartScreen() {
                 }
             }
             Button(
-                onClick = { /* Acción para rastrear pedido */ },
+                onClick = { navigateCheckoutScreen(navController)},
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
                 Text(text = "Go to Checkout", color = Color.White, fontSize = 16.sp)
@@ -67,9 +70,6 @@ private fun MyCartScreen() {
 
 @Composable
 private fun ProductCard(product: Product) {
-    val quantity = remember { mutableStateOf(product.cant) }
-    var cont = 1
-
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
@@ -107,12 +107,13 @@ private fun ProductCard(product: Product) {
                         lineHeight = 18.sp,
                         textAlign = TextAlign.Start
                     )
-                    Image(
-                        painter = painterResource(id = R.drawable.boton_cerrar),
-                        contentDescription = "Close Button",
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Color.Black,
                         modifier = Modifier
-                            .size(15.dp)
-                            .clickable { /* Add close action here */ }
+                            .size(24.dp)
+                            .clickable(onClick = {}),
                     )
                 }
                 Spacer(modifier = Modifier.height(2.dp))
@@ -129,29 +130,7 @@ private fun ProductCard(product: Product) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.boton_mycart_menos),
-                        contentDescription = "Decrease Quantity",
-                        modifier = Modifier
-                            .size(45.dp)
-                            .clickable { if (cont > 0) cont-- }
-                    )
-                    Spacer(modifier = Modifier.width(16.dp)) // Increased space
-                    Text(
-                        text = "${cont}",
-                        fontSize = 16.sp, // Adjusted font size
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.width(16.dp)) // Increased space
-                    Image(
-                        painter = painterResource(id = R.drawable.boton_mycart_mas),
-                        contentDescription = "Increase Quantity",
-                        modifier = Modifier
-                            .size(45.dp)
-                            .clickable { if (cont > 10) cont++ }
-                    )
+                    Counter()
                     Spacer(modifier = Modifier.padding(25.dp))
                     Text(
                         text = "$${product.price}",
@@ -167,8 +146,12 @@ private fun ProductCard(product: Product) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun MyCartScreenPreview() {
-    MyCartScreen()
+fun MyCartScreenPreview(navController: NavController) {
+    MyCartScreen(navController)
+}
+
+private fun navigateCheckoutScreen(navController: NavController) {
+    navController.navigate("checkout_screen")
 }

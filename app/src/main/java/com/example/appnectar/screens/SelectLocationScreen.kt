@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
+import com.example.appnectar.dataClass.barrios
 
 @Composable
 fun SelectLocationScreenPreview(navController: NavController) {
@@ -29,12 +30,7 @@ fun SelectLocationScreenPreview(navController: NavController) {
 @Composable
 private fun SelectLocationScreen(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
-    val barrios = listOf(
-        "Palermo", "Recoleta", "Belgrano", "San Telmo", "Caballito", "Villa Urquiza",
-        "Villa Devoto", "Almagro", "Boedo", "Flores", "Villa Crespo", "Retiro",
-        "Puerto Madero", "Constitución", "Barracas", "Parque Patricios", "Chacarita",
-        "Villa Lugano", "Villa Luro", "Mataderos", "Liniers", "Parque Chas", "Villa del Parque"
-    )
+    val barrios = barrios;
     var selectedBarrio by remember { mutableStateOf(barrios[0]) }
     var area by remember { mutableStateOf("") }
 

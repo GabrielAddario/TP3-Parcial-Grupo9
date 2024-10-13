@@ -51,12 +51,16 @@ fun TopNavbar(titleText: String) {
                     onDismissRequest = { expanded = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Opción 1") },
-                        onClick = { /* Acción */ }
+                        text = { Text("Tobias, Calvo") },
+                        onClick = { }
                     )
                     DropdownMenuItem(
-                        text = { Text("Opción 2") },
-                        onClick = { /* Acción */ }
+                        text = { Text("Gabriel, Addario") },
+                        onClick = { }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Roman, Luraschi") },
+                        onClick = { }
                     )
                 }
                 Spacer(modifier = Modifier.weight(0.25f))

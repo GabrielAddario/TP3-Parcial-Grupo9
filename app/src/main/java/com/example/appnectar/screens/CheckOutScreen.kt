@@ -26,16 +26,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.appnectar.R
 
 @Composable
-@Preview(showBackground = true)
-fun CheckoutScreenPreview() {
-    CheckOutScreen()
+//@Preview(showBackground = true)
+fun CheckoutScreenPreview(navController: NavController) {
+    CheckOutScreen(navController)
 }
 
 @Composable
-private fun CheckOutScreen() {
+private fun CheckOutScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -163,7 +164,7 @@ private fun CheckOutScreen() {
                     modifier = Modifier.padding(8.dp)
                 )
                 Button(
-                    onClick = { },
+                    onClick = {navigateOrderAccepted(navController)},
                     shape = RoundedCornerShape(30),
                     colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                     contentPadding = PaddingValues(),
@@ -177,5 +178,10 @@ private fun CheckOutScreen() {
                 }
             }
         }
+    }
+}
+
+private fun navigateOrderAccepted(navController: NavController) {
+    navController.navigate("order_accepted") {
     }
 }

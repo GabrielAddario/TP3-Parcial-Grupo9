@@ -11,16 +11,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.appnectar.dataClass.navItems
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    val items = listOf(
-        BottomNavItem.Shop,
-        BottomNavItem.Explore,
-        BottomNavItem.Cart,
-        BottomNavItem.Favourite,
-        BottomNavItem.Account
-    )
+    val items = navItems;
     NavigationBar(
         containerColor = Color.White,
         contentColor = Color.Black,
@@ -50,8 +45,6 @@ fun BottomNavBar(navController: NavController) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )

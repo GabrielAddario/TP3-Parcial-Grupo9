@@ -39,7 +39,7 @@ private fun FavoritesScreen(navController: NavController) {
                     modifier = Modifier.weight(1f)
                 ) {
                     items(products) { product ->
-                        CardProduct(product = product)
+                        CardProduct(navController, product = product)
                         Divider(color = colorDivider, thickness = 1.dp)
                     }
                 }
@@ -51,7 +51,6 @@ private fun FavoritesScreen(navController: NavController) {
                 contentPadding = PaddingValues(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
                 Text(text = "Add All To Cart", color = Color.White, fontSize = 16.sp)
@@ -61,7 +60,7 @@ private fun FavoritesScreen(navController: NavController) {
 }
 
 @Composable
-private fun CardProduct(product: Product) {
+private fun CardProduct(navController: NavController, product: Product) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
@@ -117,7 +116,7 @@ private fun CardProduct(product: Product) {
                     lineHeight = 27.sp,
                     textAlign = TextAlign.End
                 )
-                IconButton(onClick = { /* Add action here */ }) {
+                IconButton(onClick = {navigateProductDetails(navController, product.id) }) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_forward),
                         contentDescription = "Forward Button",
@@ -127,6 +126,10 @@ private fun CardProduct(product: Product) {
             }
         }
     }
+}
+
+private fun navigateProductDetails(navController: NavController, productId: Int) {
+  navController.navigate("product_details/$productId")
 }
 
 @Composable

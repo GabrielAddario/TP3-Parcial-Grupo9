@@ -21,16 +21,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.appnectar.R
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun PreviewOrderAcceptedScreen() {
-    OrderAcceptedScreen()
+fun PreviewOrderAcceptedScreen(navController: NavController) {
+    OrderAcceptedScreen(navController)
 }
 
 @Composable
-private fun OrderAcceptedScreen() {
+private fun OrderAcceptedScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -80,9 +81,8 @@ private fun OrderAcceptedScreen() {
 
             Spacer(modifier = Modifier.height(150.dp))
 
-            // Botón de "Track Order"
             Button(
-                onClick = { /* Acción para rastrear pedido */ },
+                onClick = { navigateHomeScreen(navController) },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
@@ -98,8 +98,14 @@ private fun OrderAcceptedScreen() {
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
                 modifier = Modifier.padding(top = 16.dp)
-                                    .clickable {  },
+                                    .clickable { navigateHomeScreen(navController) },
             )
         }
     }
 }
+
+private fun navigateHomeScreen(navController: NavController) {
+    navController.navigate("home_screen") {
+    }
+}
+

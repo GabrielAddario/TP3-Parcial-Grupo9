@@ -12,6 +12,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
@@ -38,24 +39,27 @@ import com.example.appnectar.navController.navs.TopNavbar
 
 
 @Composable
-fun HomeScreenPreview(navController: NavController, barrio: String) {
-    HomeScreenContent(navController, barrio)
+fun HomeScreenPreview(navController: NavController) {
+    HomeScreenContent(navController)
 }
 
 @Composable
-private fun HomeScreenContent(navController: NavController, barrio: String) {
+private fun HomeScreenContent(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
-        bottomBar = { BottomNavBar(navController) } // Agregar la BottomNavBar aquí
+        bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
+        val scrollState = rememberScrollState()
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .padding(16.dp)) {
+            .padding(16.dp)
+            .verticalScroll(scrollState))
+        {
 
             Text(
-                text = barrio,
+                text = "Dhaka, Banassre",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray,

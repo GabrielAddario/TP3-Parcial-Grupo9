@@ -71,7 +71,7 @@ private fun ProductListScreen() {
 }
 
 @Composable
-private fun SearchBar() {
+fun SearchBar() {
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
 
     Row(
@@ -102,7 +102,7 @@ private fun SearchBar() {
 }
 
 @Composable
-private fun CardProduct(product: Product) {
+fun CardProduct(product: Product) {
     Card(
         modifier = Modifier
             .width(160.dp)

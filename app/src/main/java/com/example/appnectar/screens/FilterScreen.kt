@@ -1,11 +1,14 @@
 package com.example.appnectar.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,17 +30,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.appnectar.dataClass.Categories
 
 
 @Composable
-private fun FilterScreen() {
+private fun FilterScreen(navController: NavController) {
     var categoriesState by remember { mutableStateOf(listOf(false, false, false, false)) }
     var brandsState by remember { mutableStateOf(listOf(false, false, false, false)) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White) // Fondo blanco para la primera columna
+            .background(Color.White)
     ) {
         Column(
             modifier = Modifier
@@ -52,16 +57,26 @@ private fun FilterScreen() {
                     .padding(bottom = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp)
+                        .padding(vertical = 16.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = { /* Acción para cerrar */ }) {
-                        Icon(imageVector = Icons.Default.Close, contentDescription = "Cerrar")
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Color.Gray,
+                        modifier = Modifier
+                            .size(18.dp)
+                            .clickable { navigateExploreScreen(navController) }
+                            .align(Alignment.TopStart)
+                    )
+
+                    Spacer(modifier = Modifier.height(1.dp))
                     Text(text = "Filters", style = MaterialTheme.typography.titleLarge,  textAlign = TextAlign.Center)
-                    Spacer(modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.height(1.dp))
                 }
             }
 
@@ -74,7 +89,7 @@ private fun FilterScreen() {
                     .background(
                         color = Color(0xFFeeeeee),
                         shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp)
-                    ) // Fondo blanco eeeeee con esquinas superiores redondeadas
+                    )
                     .padding(horizontal = 16.dp)
             ) {
                 Column(
@@ -90,7 +105,7 @@ private fun FilterScreen() {
                         Column {
                             Text(text = "Categories", style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp)
                             Spacer(modifier = Modifier.height(8.dp))
-                            val categories = listOf("Eggs", "Noodles & Pasta", "Chips & Crisps", "Fast Food")
+                            val categories = Categories
                             categories.forEachIndexed { index, category ->
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     RoundedCornerCheckbox(
@@ -104,10 +119,10 @@ private fun FilterScreen() {
                                     Text(
                                         text = category,
                                         fontSize = 18.sp,
-                                        color = if (categoriesState[index]) Color(0xFF00A86B) else Color.Black
+                                        color = if (categoriesState[index]) Color(0xFF53B175) else Color.Black
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(4.dp)) // Espacio entre los elementos de la checklist
+                                Spacer(modifier = Modifier.height(4.dp))
                             }
                         }
                     }
@@ -174,6 +189,11 @@ private fun FilterScreen() {
     }
 }
 
+private fun navigateExploreScreen(navController: NavController) {
+    navController.navigate("explore_screen") {
+    }
+}
+
 @Composable
 private fun RoundedCornerCheckbox(
     checked: Boolean,
@@ -181,28 +201,36 @@ private fun RoundedCornerCheckbox(
 ) {
     Box(
         modifier = Modifier
-            .background(
-                color = if (checked) Color(0xFF53B175) else Color.Transparent, // Fondo verde si está marcado
-                shape = RoundedCornerShape(20.dp) // Bordes redondeados
-            )
-            .padding(4.dp) // Añade un pequeño padding alrededor del checkbox
+            .size(30.dp) // Tamaño del contenedor del checkbox
+            .clickable { onCheckedChange?.invoke(!checked) }
+            .padding(4.dp)
     ) {
+        // Fondo redondeado
+        Box(
+            modifier = Modifier
+                .size(30.dp) // Tamaño del fondo
+                .background(color = if (checked) Color(0xFF53B175) else Color.Transparent, shape = RoundedCornerShape(4.dp))
+                .border(width = 2.dp, color = Color.LightGray)
+        )
+
+        // Checkbox en el centro
         Checkbox(
             checked = checked,
-            onCheckedChange = onCheckedChange,
-            modifier = Modifier.size(30.dp), // Tamaño del checkbox
+            onCheckedChange = null, // No maneja el cambio dentro del Checkbox
+            modifier = Modifier
+                .size(30.dp), // Tamaño del checkbox
             colors = CheckboxDefaults.colors(
-                checkedColor = Color.White, // Color del tilde
-                uncheckedColor = Color.LightGray, // Color del borde cuando no está marcado
-                checkmarkColor = Color(0xFF53B175) // Color del checkmark cuando está marcado
+                checkedColor = Color.Transparent, // Sin color de fondo cuando está marcado
+                uncheckedColor = Color.Transparent, // Sin color de fondo cuando no está marcado
+                checkmarkColor = Color.White // Color del checkmark
             )
         )
     }
 }
 
 
+
 @Composable
-@Preview(showBackground = true)
-fun FilterScreenPreview() {
-    FilterScreen()
+fun FilterScreenPreview(navController: NavController) {
+    FilterScreen(navController)
 }
