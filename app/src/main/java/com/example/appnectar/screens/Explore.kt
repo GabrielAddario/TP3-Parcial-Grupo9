@@ -40,7 +40,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
@@ -94,9 +93,7 @@ private fun ExploreContent(navController: NavController) {
             ) {
                 items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
-                        category = category,
-                        color = getCategoryColor(category),
-                        onClick = { }
+                        category = category
                     )
                 }
             }
@@ -105,7 +102,7 @@ private fun ExploreContent(navController: NavController) {
 }
 
 @Composable
-private fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
+private fun CategoryCard(category: Category) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
@@ -118,17 +115,17 @@ private fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) 
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxSize(), // Fill the card size
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = category.imageRes),
                 contentDescription = category.displayName,
-                modifier = Modifier.size(64.dp), // Adjust the size as needed
+                modifier = Modifier.size(64.dp),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Add space between image and text
+            Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -137,23 +134,10 @@ private fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) 
                     category.displayName,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center // Center the text within the box
+                    textAlign = TextAlign.Center
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun getCategoryColor(category: Category): Color {
-    return when (category) {
-        Category.FRUITS_VEGETABLES -> Color.Green
-        Category.OIL_GHEE -> Color.Yellow
-        Category.MEAT_FISH -> Color.Red
-        Category.BAKERY_SNACKS -> Color.Magenta
-        Category.DAIRY_EGGS -> Color.Blue
-        Category.BEVERAGES -> Color.Cyan
-        Category.OTHER -> Color.Gray
     }
 }
 
