@@ -1,17 +1,17 @@
 package com.example.appnectar.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,35 +25,44 @@ import com.example.appnectar.R
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
 import com.example.appnectar.dataClass.MyCarts
+import com.example.appnectar.navController.navs.BottomNavBar
 
-
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-private fun MyCartScreen(navController: NavController) {
+fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
     val products = MyCarts
     val colorDivider = Color(0xFFE2E2E2)
+    var showCheckoutScreen by remember { mutableStateOf(false) }
+
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
         topBar = { TopNavbar("My Cart") },
+        bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         Box(modifier = Modifier
             .fillMaxSize()
+            .background(backgroundColor)
             .padding(paddingValues)) {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+            ) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Divider(color = colorDivider, thickness = 1.dp)
                 LazyColumn(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)
                 ) {
                     items(products) { product ->
-                        ProductCard(product = product)
+                        ProductCard(product, textColor, backgroundColor, navController)
                         HorizontalDivider(thickness = 1.dp, color = colorDivider)
                     }
                 }
             }
             Button(
-                onClick = { navigateCheckoutScreen(navController)},
+                onClick = { showCheckoutScreen = true },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
@@ -64,19 +73,26 @@ private fun MyCartScreen(navController: NavController) {
                 Text(text = "Go to Checkout", color = Color.White, fontSize = 16.sp)
             }
         }
+
+        AnimatedVisibility(
+            visible = showCheckoutScreen,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it })
+        ) {
+            CheckOutScreen(navController = navController)
+        }
     }
 }
 
-
 @Composable
-private fun ProductCard(product: Product) {
+fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
             .width(363.dp)
-            .height(150.dp) // Adjusted height to accommodate larger images
+            .height(150.dp)
             .padding(vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Row(
             modifier = Modifier.padding(15.dp),
@@ -86,7 +102,7 @@ private fun ProductCard(product: Product) {
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = product.title,
-                modifier = Modifier.size(70.dp) // Increased size
+                modifier = Modifier.size(70.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
@@ -94,64 +110,55 @@ private fun ProductCard(product: Product) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
+                Text(
+                    text = product.title,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = textColor,
+                    lineHeight = 18.sp,
+                    textAlign = TextAlign.Start
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = "${product.cant} ${product.typeSizes}, Price",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = textColor,
+                    lineHeight = 18.sp,
+                    textAlign = TextAlign.Start
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = product.title,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        lineHeight = 18.sp,
-                        textAlign = TextAlign.Start
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        tint = Color.Black,
-                        modifier = Modifier
-                            .size(24.dp)
-                            .clickable(onClick = {}),
-                    )
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "${product.cant}${product.typeSizes}, Price",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Gray,
-                    lineHeight = 14.sp,
-                    textAlign = TextAlign.Start
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Counter()
-                    Spacer(modifier = Modifier.padding(25.dp))
-                    Text(
                         text = "$${product.price}",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
+                        color = textColor,
                         lineHeight = 27.sp,
                         textAlign = TextAlign.End
                     )
+                    IconButton(onClick = { navigateProductDetails(navController, product.id) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.arrow_forward),
+                            contentDescription = "Forward Button",
+                            modifier = Modifier.size(8.4.dp, 12.dp)
+                        )
+                    }
                 }
             }
         }
     }
 }
 
-//@Preview
-@Composable
-fun MyCartScreenPreview(navController: NavController) {
-    MyCartScreen(navController)
+private fun navigateProductDetails(navController: NavController, productId: Int) {
+    navController.navigate("product_details/$productId")
 }
 
-private fun navigateCheckoutScreen(navController: NavController) {
-    navController.navigate("checkout_screen")
+@Composable
+fun MyCartScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    MyCartScreen(navController, isDarkModeEnabled)
 }

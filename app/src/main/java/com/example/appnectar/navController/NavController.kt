@@ -9,9 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appnectar.navController.navs.MainScreen
+import com.example.appnectar.screens.AccountScreenPreview
 import com.example.appnectar.screens.CheckoutScreenPreview
 import com.example.appnectar.screens.ExplorePreview
-import com.example.appnectar.screens.FavoritesScreenPreview
+import com.example.appnectar.screens.FavouriteScreenPreview
+
 import com.example.appnectar.screens.FilterScreenPreview
 import com.example.appnectar.screens.HomeScreenPreview
 import com.example.appnectar.screens.MyCartScreenPreview
@@ -24,7 +26,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavController() {
+fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "splash_screen") {
         composable("splash_screen") { SplashScreen(navController) }
@@ -32,18 +34,23 @@ fun NavController() {
         composable("sign_in") { SignInScreenPreview(navController) }
         composable("sign_up") { SignUpScreenPreview(navController) }
         composable("location_screen") { SelectLocationScreenPreview(navController) }
-        composable("home_screen") { HomeScreenPreview(navController) }
+        composable("home_screen") { HomeScreenPreview(navController, isDarkModeEnabled) }
         composable("main_screen") { MainScreen(navController) }
-        composable("my_cart_screen") { MainScreen(navController) { MyCartScreenPreview(navController) } }
-        composable("explore_screen") { MainScreen(navController) { ExplorePreview(navController) } }
-        composable("favourite_screen"){ MainScreen(navController) { FavoritesScreenPreview(navController)} }
+        composable("my_cart_screen") { MyCartScreenPreview(navController, isDarkModeEnabled) }
+        composable("explore_screen") { ExplorePreview(navController, isDarkModeEnabled) }
+        composable("favourite_screen") { FavouriteScreenPreview(navController, isDarkModeEnabled) }
         composable("product_details/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId")
-            ProductDetailScreenPreview(navController = navController, productId)
+            ProductDetailScreenPreview(navController = navController, productId, isDarkModeEnabled)
         }
-        composable("checkout_screen"){ CheckoutScreenPreview(navController) }
-        composable("order_accepted"){ PreviewOrderAcceptedScreen(navController) }
-        composable("filters"){ FilterScreenPreview(navController) }
+        composable("checkout_screen") { CheckoutScreenPreview(navController, isDarkModeEnabled) }
+        composable("order_accepted") { PreviewOrderAcceptedScreen(navController, isDarkModeEnabled) }
+        composable("filters") { FilterScreenPreview(navController, isDarkModeEnabled) }
+        composable("account_screen") {
+            MainScreen(navController) {
+                AccountScreenPreview(navController, isDarkModeEnabled, onDarkModeToggle)
+            }
+        }
     }
 }
 
@@ -53,8 +60,23 @@ fun SplashScreen(navController: NavHostController) {
         launch {
             delay(2000)
             navController.navigate("onboarding") {
+                popUpTo("splash_screen") { inclusive = true }
             }
         }
     }
     SplashScreenPreview()
+}
+
+@Composable
+fun OnboardingPreview(navController: NavHostController) {
+    // Simulate onboarding completion
+    LaunchedEffect(Unit) {
+        launch {
+            delay(2000)
+            navController.navigate("location_screen") {
+                popUpTo("onboarding") { inclusive = true }
+            }
+        }
+    }
+    // Your Onboarding UI here
 }
