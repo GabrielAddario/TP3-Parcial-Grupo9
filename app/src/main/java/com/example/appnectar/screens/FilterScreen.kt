@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun FilterScreen() {
+private fun FilterScreen() {
     var categoriesState by remember { mutableStateOf(listOf(false, false, false, false)) }
     var brandsState by remember { mutableStateOf(listOf(false, false, false, false)) }
 
@@ -175,7 +175,7 @@ fun FilterScreen() {
 }
 
 @Composable
-fun RoundedCornerCheckbox(
+private fun RoundedCornerCheckbox(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
 ) {

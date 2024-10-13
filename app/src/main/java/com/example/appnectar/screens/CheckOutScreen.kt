@@ -35,7 +35,7 @@ fun CheckoutScreenPreview() {
 }
 
 @Composable
-fun CheckOutScreen() {
+private fun CheckOutScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()

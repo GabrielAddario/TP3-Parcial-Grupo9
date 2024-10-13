@@ -31,7 +31,7 @@ fun ProductDetailScreenPreview(navController: NavController, productId: String?)
 }
 
 @Composable
-fun ProductDetailScreen(productId: String?) {
+private fun ProductDetailScreen(productId: String?) {
     val product = ProductListItems.find { it.id.toString() == productId }
     product?.let {
         Column(

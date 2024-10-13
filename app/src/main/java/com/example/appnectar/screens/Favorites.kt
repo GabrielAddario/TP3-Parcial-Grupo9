@@ -13,19 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.FavoriteItems
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun FavoritesScreen(navController: NavController) {
+private fun FavoritesScreen(navController: NavController) {
     val products = FavoriteItems // Use the product list from FakeData
     val colorDivider = Color(0xFFE2E2E2)
 
@@ -63,7 +61,7 @@ fun FavoritesScreen(navController: NavController) {
 }
 
 @Composable
-fun CardProduct(product: Product) {
+private fun CardProduct(product: Product) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier

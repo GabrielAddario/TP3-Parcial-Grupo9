@@ -30,7 +30,7 @@ fun PreviewOrderAcceptedScreen() {
 }
 
 @Composable
-fun OrderAcceptedScreen() {
+private fun OrderAcceptedScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()

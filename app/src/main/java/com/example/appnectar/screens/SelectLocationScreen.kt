@@ -27,7 +27,7 @@ fun SelectLocationScreenPreview(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectLocationScreen(navController: NavController) {
+private fun SelectLocationScreen(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
     val barrios = listOf(
         "Palermo", "Recoleta", "Belgrano", "San Telmo", "Caballito", "Villa Urquiza",
@@ -156,7 +156,7 @@ fun SelectLocationScreen(navController: NavController) {
 }
 
 
-fun navigateHomeScreen(navController: NavController, barrio: String) {
+private fun navigateHomeScreen(navController: NavController, barrio: String) {
     navController.navigate("home_screen") {
     }
 }

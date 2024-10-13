@@ -28,7 +28,7 @@ import com.example.appnectar.dataClass.MyCarts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCartScreen() {
+private fun MyCartScreen() {
     val products = MyCarts // Use the product list from FakeData
     val colorDivider = Color(0xFFE2E2E2)
 
@@ -66,7 +66,7 @@ fun MyCartScreen() {
 
 
 @Composable
-fun ProductCard(product: Product) {
+private fun ProductCard(product: Product) {
     val quantity = remember { mutableStateOf(product.cant) }
     var cont = 1
 

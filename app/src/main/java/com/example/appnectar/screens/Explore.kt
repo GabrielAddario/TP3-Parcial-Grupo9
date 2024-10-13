@@ -1,9 +1,5 @@
 package com.example.appnectar.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +19,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,22 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
-/*
-class Explore : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ExploreContent(navController)
-        }
-    }
-}
 
- */
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExploreContent() {
+private fun ExploreContent() {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
@@ -87,7 +69,7 @@ fun ExploreContent() {
                     CategoryCard(
                         category = category,
                         color = getCategoryColor(category),
-                        onClick = { /* Navegar a la ruta específica */ }
+                        onClick = {  }
                     )
                 }
             }
@@ -96,14 +78,14 @@ fun ExploreContent() {
 }
 
 @Composable
-fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
+private fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .width(175.5.dp)
             .height(189.11.dp)
             .padding(8.dp)
-            .clickable { onClick() },
+            .clickable { },
         colors = CardDefaults.cardColors(containerColor = category.color)
     ) {
         Column(
@@ -135,12 +117,8 @@ fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
     }
 }
 
-fun onClick() {
-    TODO("Not yet implemented")
-}
-
 @Composable
-fun getCategoryColor(category: Category): Color {
+private fun getCategoryColor(category: Category): Color {
     return when (category) {
         Category.FRUITS_VEGETABLES -> Color.Green
         Category.OIL_GHEE -> Color.Yellow

@@ -43,7 +43,7 @@ fun HomeScreenPreview(navController: NavController, barrio: String) {
 }
 
 @Composable
-fun HomeScreenContent(navController: NavController, barrio: String) {
+private fun HomeScreenContent(navController: NavController, barrio: String) {
     var searchQuery by remember { mutableStateOf("") }
     Scaffold(
         topBar = { TopNavbar("Shop") },
@@ -106,7 +106,7 @@ fun HomeScreenContent(navController: NavController, barrio: String) {
 }
 
 @Composable
-fun ProductCard(product: Product, navController: NavController) {
+private fun ProductCard(product: Product, navController: NavController) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
@@ -182,7 +182,7 @@ fun ProductCard(product: Product, navController: NavController) {
     }
 }
 
-fun navigateProductDetails(navController: NavController, productId: Int) {
+private fun navigateProductDetails(navController: NavController, productId: Int) {
     navController.navigate("product_details/$productId")
 }
 

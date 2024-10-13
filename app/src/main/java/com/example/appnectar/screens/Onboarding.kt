@@ -27,7 +27,7 @@ fun OnboardingPreview(navController: NavController) {
 }
 
 @Composable
-fun Onboarding(navController: NavController) {
+private fun Onboarding(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -102,7 +102,7 @@ fun Onboarding(navController: NavController) {
         }
     }
 
-fun navigateOnboarding(navController: NavController) {
+private fun navigateOnboarding(navController: NavController) {
     navController.navigate("sign_in") {
     }
 }

@@ -3,11 +3,9 @@ package com.example.appnectar.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -33,11 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.appnectar.R
-import com.example.appnectar.dataClass.Category
-import com.example.appnectar.dataClass.MyCarts
 import com.example.appnectar.dataClass.SearchCarts
-import com.example.appnectar.dataClass.TypeSizes
 import com.example.appnectar.navController.navs.TopNavbar
 
 @Preview(showBackground = true)
@@ -47,13 +41,13 @@ fun ProductListScreenPreview() {
 }
 
 @Composable
-fun ProductListScreen() {
+private fun ProductListScreen() {
     val products = SearchCarts
     val colorDivider = Color(0xFFE2E2E2)
 
     Scaffold(
         topBar = { TopNavbar("Search") },
-        bottomBar = { BottomNavigationBar() }
+        bottomBar = { }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -64,19 +58,20 @@ fun ProductListScreen() {
             SearchBar()
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2), // Establece dos columnas
+                columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f)
             ) {
                 items(products) { product ->
-                    CardPorduct(product = product)
+                    CardProduct(product = product)
                     HorizontalDivider(thickness = 1.dp, color = colorDivider)
                 }
             }
         }
     }
 }
+
 @Composable
-fun SearchBar() {
+private fun SearchBar() {
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
 
     Row(
@@ -107,7 +102,7 @@ fun SearchBar() {
 }
 
 @Composable
-fun CardPorduct(product: Product) {
+private fun CardProduct(product: Product) {
     Card(
         modifier = Modifier
             .width(160.dp)
@@ -182,36 +177,5 @@ fun CardPorduct(product: Product) {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BottomNavigationBar() {
-    BottomNavigation {
-        BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.egg_chicken_red), contentDescription = "Shop") },
-            selected = true,
-            onClick = { /* Acción al presionar el icono */ }
-        )
-        BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.egg_chicken_red), contentDescription = "Explore") },
-            selected = false,
-            onClick = { /* Acción al presionar el icono */ }
-        )
-        BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.ic_launcher_foreground), contentDescription = "Cart") },
-            selected = false,
-            onClick = { /* Acción al presionar el icono */ }
-        )
-        BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.ic_launcher_foreground), contentDescription = "Favourite") },
-            selected = false,
-            onClick = { /* Acción al presionar el icono */ }
-        )
-        BottomNavigationItem(
-            icon = { Icon(painterResource(R.drawable.ic_launcher_foreground), contentDescription = "Account") },
-            selected = false,
-            onClick = { /* Acción al presionar el icono */ }
-        )
     }
 }
