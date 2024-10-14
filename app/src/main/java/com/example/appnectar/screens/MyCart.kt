@@ -6,10 +6,13 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -88,7 +91,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
 }
 
 @Composable
-fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
+private fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
@@ -105,7 +108,7 @@ fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navC
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = product.title,
-                modifier = Modifier.size(70.dp)
+                modifier = Modifier.size(70.dp) // Increased size
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
@@ -113,21 +116,35 @@ fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navC
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(
-                    text = product.title,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = textColor,
-                    lineHeight = 18.sp,
-                    textAlign = TextAlign.Start
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = product.title,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = textColor,
+                        lineHeight = 18.sp,
+                        textAlign = TextAlign.Start
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Color.Black,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable(onClick = {}),
+                    )
+                }
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "${product.cant} ${product.typeSizes}, Price",
+                    text = "${product.cant}${product.typeSizes}, Price",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
-                    color = textColor,
-                    lineHeight = 18.sp,
+                    color = Color.Gray,
+                    lineHeight = 14.sp,
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.height(20.dp))
@@ -136,21 +153,16 @@ fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navC
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    Counter()
+                    Spacer(modifier = Modifier.padding(25.dp))
                     Text(
                         text = "$${product.price}",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = textColor,
+                        color = Color.Black,
                         lineHeight = 27.sp,
                         textAlign = TextAlign.End
                     )
-                    IconButton(onClick = { navigateProductDetails(navController, product.id) }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.arrow_forward),
-                            contentDescription = "Forward Button",
-                            modifier = Modifier.size(8.4.dp, 12.dp)
-                        )
-                    }
                 }
             }
         }

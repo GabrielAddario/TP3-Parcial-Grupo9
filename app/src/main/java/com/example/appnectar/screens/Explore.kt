@@ -45,9 +45,11 @@ import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
 import androidx.compose.material.*
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavController
 import com.example.appnectar.navController.navs.BottomNavBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExploreContent(navController: NavController, isDarkModeEnabled: Boolean) {
     var searchQuery by remember { mutableStateOf("") }
@@ -86,7 +88,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xFFF5F5F5),
+                    containerColor = Color(0xFFF5F5F5),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     cursorColor = textColor
@@ -155,9 +157,15 @@ private fun navigateFilters(navController: NavController) {
     navController.navigate("filters")
 }
 
+private fun navigateSearch(navController: NavController, searchQuery: String) {
+    navController.navigate("search/$searchQuery")
+}
+
+private fun navigateToCategory(navController: NavController, category: Category) {
+    navController.navigate("categories_screen/${category.name}")
+}
+
 @Composable
 fun ExplorePreview(navController: NavController, isDarkModeEnabled: Boolean) {
     ExploreContent(navController, isDarkModeEnabled)
 }
-
-
