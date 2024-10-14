@@ -155,12 +155,9 @@ private fun navigateFilters(navController: NavController) {
     navController.navigate("filters")
 }
 
-private fun navigateSearch(navController: NavController, searchQuery: String) {
-    navController.navigate("search/$searchQuery")
-}
-
 @Composable
 fun ExplorePreview(navController: NavController, isDarkModeEnabled: Boolean) {
     ExploreContent(navController, isDarkModeEnabled)
 }
+
 
