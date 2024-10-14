@@ -1,5 +1,6 @@
 package com.example.appnectar.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +34,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
+import com.example.appnectar.client.RetrofitClient
+import com.example.appnectar.client.model.UserListItem
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun SignInScreenPreview(navController: NavController) {
@@ -40,7 +46,7 @@ fun SignInScreenPreview(navController: NavController) {
 }
 
 @Composable
-fun SignInScreen(navController: NavController) {
+private fun SignInScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -172,16 +178,27 @@ fun SignInScreen(navController: NavController) {
    }
 }
 
-fun loginUser(email: String, password: String, context: android.content.Context, navController: NavController) {
-    if (email == "mor_2314" && password == "83r5^_") {
-        Toast.makeText(context, "Login successful!", Toast.LENGTH_LONG).show()
-        navController.navigate("location_screen")
-    } else {
-        Toast.makeText(context, "Invalid credentials.", Toast.LENGTH_SHORT).show()
+private fun loginUser(email : String, password : String, context: Context, navController: NavController) {
+    if (email.isNotEmpty() && password.isNotEmpty()) {
+        RetrofitClient.instance.userLogin(email, password).enqueue(object: Callback<UserListItem> {
+            override fun onResponse(call: Call<UserListItem>, response: Response<UserListItem>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "Sign In Successful", Toast.LENGTH_SHORT).show()
+                    navController.navigate("location_screen")
+                } else {
+                    Toast.makeText(context, "Invalid username or password", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UserListItem>, t: Throwable) {
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }
 
-fun navigateSignUp(navController: NavController) {
+
+private fun navigateSignUp(navController: NavController) {
     navController.navigate("sign_up") {
     }
 }

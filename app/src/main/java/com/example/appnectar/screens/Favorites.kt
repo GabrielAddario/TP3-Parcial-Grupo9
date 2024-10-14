@@ -1,6 +1,7 @@
 package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,36 +14,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.FavoriteItems
 import com.example.appnectar.dataClass.Product
+import com.example.appnectar.navController.navs.BottomNavBar
 import com.example.appnectar.navController.navs.TopNavbar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoritesScreen(navController: NavController) {
-    val products = FavoriteItems // Use the product list from FakeData
+fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
+    val products = FavoriteItems
     val colorDivider = Color(0xFFE2E2E2)
+
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
         topBar = { TopNavbar("Favorites") },
+        bottomBar = {  BottomNavBar(navController)  }
     ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+            .padding(paddingValues)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Divider(color = colorDivider, thickness = 1.dp)
                 LazyColumn(
-                    //verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier.weight(1f)
                 ) {
                     items(products) { product ->
-                        CardProduct(product = product)
-                        Divider(color = colorDivider, thickness = 1.dp)
+                        CardProduct(navController, product, textColor, backgroundColor)
+                        HorizontalDivider(thickness = 1.dp, color = colorDivider)
                     }
                 }
             }
@@ -53,7 +60,7 @@ fun FavoritesScreen(navController: NavController) {
                 contentPadding = PaddingValues(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(16.dp)
+                    .padding(bottom = 16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
                 Text(text = "Add All To Cart", color = Color.White, fontSize = 16.sp)
@@ -63,14 +70,14 @@ fun FavoritesScreen(navController: NavController) {
 }
 
 @Composable
-fun CardProduct(product: Product) {
+fun CardProduct(navController: NavController, product: Product, textColor: Color, backgroundColor: Color) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier
             .width(363.dp)
-            .height(100.dp) // Adjusted height
+            .height(100.dp)
             .padding(vertical = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Row(
             modifier = Modifier.padding(15.dp),
@@ -80,7 +87,7 @@ fun CardProduct(product: Product) {
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = product.title,
-                modifier = Modifier.size(70.dp) // Increased size
+                modifier = Modifier.size(70.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
@@ -92,7 +99,7 @@ fun CardProduct(product: Product) {
                     text = product.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black,
+                    color = textColor,
                     lineHeight = 18.sp,
                     textAlign = TextAlign.Start
                 )
@@ -115,11 +122,11 @@ fun CardProduct(product: Product) {
                     text = "$${product.price}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+                    color = textColor,
                     lineHeight = 27.sp,
                     textAlign = TextAlign.End
                 )
-                IconButton(onClick = { /* Add action here */ }) {
+                IconButton(onClick = { navigateProductDetails(navController, product.id) }) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_forward),
                         contentDescription = "Forward Button",
@@ -131,7 +138,11 @@ fun CardProduct(product: Product) {
     }
 }
 
+private fun navigateProductDetails(navController: NavController, productId: Int) {
+    navController.navigate("product_details/$productId")
+}
+
 @Composable
-fun FavoritesScreenPreview(navController: NavController) {
-    FavoritesScreen(navController)
+fun FavouriteScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    FavouriteScreen(navController, isDarkModeEnabled )
 }

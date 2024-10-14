@@ -1,5 +1,7 @@
 package com.example.appnectar.screens
 
+
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,6 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
+import com.example.appnectar.client.RetrofitClient
+import com.example.appnectar.client.model.UserListItem
+import retrofit2.Call
+import retrofit2.Callback
 
 @Composable
 fun SignUpScreenPreview(navController: NavController) {
@@ -40,11 +46,12 @@ fun SignUpScreenPreview(navController: NavController) {
 }
 
 @Composable
-fun SignUpScreen(navController: NavController) {
+private fun SignUpScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -156,12 +163,29 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                onClick = {navigateScreenMain(navController)},
-                shape = RoundedCornerShape(30),
+                onClick = {
+                    RetrofitClient.instance.createUser(username, email, password).enqueue(object: Callback<UserListItem> {
+                        override fun onResponse(
+                            call: retrofit2.Call<UserListItem>,
+                            response: retrofit2.Response<UserListItem>
+                        ) {
+                            if (response.isSuccessful && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                                Toast.makeText(context, "Sign Up Successful", Toast.LENGTH_SHORT).show()
+                                navController.navigate("sign_in")
+                            } else {
+                                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<UserListItem>, t: Throwable) {
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                },
+                shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
-                modifier = Modifier
-                    .size(width = 350.dp, height = 60.dp),
+                modifier = Modifier.size(width = 350.dp, height = 60.dp)
             ) {
                 Text(
                     text = "Sign Up",
@@ -186,12 +210,7 @@ fun SignUpScreen(navController: NavController) {
 }
 
 
-fun navigateSignIn(navController: NavController) {
+private fun navigateSignIn(navController: NavController) {
     navController.navigate("sign_in") {
-    }
-}
-
-fun navigateScreenMain(navController: NavController) {
-    navController.navigate("") {
     }
 }

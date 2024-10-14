@@ -15,10 +15,12 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
+import com.example.appnectar.dataClass.barrios
 
 @Composable
 fun SelectLocationScreenPreview(navController: NavController) {
@@ -27,14 +29,9 @@ fun SelectLocationScreenPreview(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectLocationScreen(navController: NavController) {
+private fun SelectLocationScreen(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
-    val barrios = listOf(
-        "Palermo", "Recoleta", "Belgrano", "San Telmo", "Caballito", "Villa Urquiza",
-        "Villa Devoto", "Almagro", "Boedo", "Flores", "Villa Crespo", "Retiro",
-        "Puerto Madero", "Constitución", "Barracas", "Parque Patricios", "Chacarita",
-        "Villa Lugano", "Villa Luro", "Mataderos", "Liniers", "Parque Chas", "Villa del Parque"
-    )
+    val barrios = barrios;
     var selectedBarrio by remember { mutableStateOf(barrios[0]) }
     var area by remember { mutableStateOf("") }
 
@@ -66,12 +63,15 @@ fun SelectLocationScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Switch on your location to stay in tune with what’s happening in your area",
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            color = Color.Gray,
+            textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(140.dp))
         Text(
             text = "Your Zone",
-            fontSize = 18.sp,
+            fontSize = 16.sp,
+            modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -120,7 +120,8 @@ fun SelectLocationScreen(navController: NavController) {
 
         Text(
             text = "Your Area",
-            fontSize = 18.sp
+            fontSize = 16.sp,
+            modifier = Modifier.align(Alignment.Start)
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -136,7 +137,7 @@ fun SelectLocationScreen(navController: NavController) {
                 .background(Transparent)
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(48.dp))
 
         // Botón que navega a la pantalla de inicio
         Button(
@@ -145,7 +146,7 @@ fun SelectLocationScreen(navController: NavController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .height(70.dp)
                 .clip(RoundedCornerShape(0.dp)),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175))
         ) {
@@ -156,7 +157,7 @@ fun SelectLocationScreen(navController: NavController) {
 }
 
 
-fun navigateHomeScreen(navController: NavController, barrio: String) {
+private fun navigateHomeScreen(navController: NavController, barrio: String) {
     navController.navigate("home_screen") {
     }
 }

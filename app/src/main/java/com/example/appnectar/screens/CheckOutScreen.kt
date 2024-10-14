@@ -23,19 +23,19 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.appnectar.R
 
 @Composable
-@Preview(showBackground = true)
-fun CheckoutScreenPreview() {
-    CheckOutScreen()
+//@Preview(showBackground = true)
+fun CheckoutScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    CheckOutScreen(navController)
 }
 
 @Composable
-fun CheckOutScreen() {
+fun CheckOutScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -163,7 +163,7 @@ fun CheckOutScreen() {
                     modifier = Modifier.padding(8.dp)
                 )
                 Button(
-                    onClick = { },
+                    onClick = {navigateOrderAccepted(navController)},
                     shape = RoundedCornerShape(30),
                     colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                     contentPadding = PaddingValues(),
@@ -177,5 +177,10 @@ fun CheckOutScreen() {
                 }
             }
         }
+    }
+}
+
+private fun navigateOrderAccepted(navController: NavController) {
+    navController.navigate("order_accepted") {
     }
 }

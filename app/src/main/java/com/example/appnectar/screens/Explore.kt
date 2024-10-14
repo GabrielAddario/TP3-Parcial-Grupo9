@@ -1,9 +1,5 @@
 package com.example.appnectar.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,13 +17,17 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,31 +40,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
-/*
-class Explore : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ExploreContent(navController)
-        }
-    }
-}
+import androidx.compose.material.*
+import androidx.navigation.NavController
+import com.example.appnectar.navController.navs.BottomNavBar
 
- */
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExploreContent(navController: NavHostController) {
+private fun ExploreContent(navController: NavController, isDarkModeEnabled: Boolean) {
     var searchQuery by remember { mutableStateOf("") }
+    val textColor = if (isDarkModeEnabled) Color.Black else Color.Black
+
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
+        bottomBar = { BottomNavBar(navController)}
     ) { paddingValues ->
         Column(modifier = Modifier
             .padding(paddingValues)
@@ -72,12 +63,34 @@ fun ExploreContent(navController: NavHostController) {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search Categories", fontSize = 15.sp, fontWeight = FontWeight.Light) },
+                placeholder = { Text("Search Store", fontSize = 15.sp, fontWeight = FontWeight.Light, color = textColor) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
-                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp)
+                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon",
+                        tint = textColor
+                    )
+                },
+                trailingIcon = {
+                    IconButton(onClick = { navigateFilters(navController) }) {
+                        Icon(
+                            imageVector = Icons.Default.Tune,
+                            contentDescription = "Settings Icon",
+                            tint = textColor
+                        )
+                    }
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color(0xFFF5F5F5),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    cursorColor = textColor
+                )
             )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -86,11 +99,10 @@ fun ExploreContent(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(Category.entries.filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
+                items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
                         category = category,
-                        color = getCategoryColor(category),
-                        onClick = { /* Navegar a la ruta específica */ }
+                        textColor = textColor
                     )
                 }
             }
@@ -99,30 +111,30 @@ fun ExploreContent(navController: NavHostController) {
 }
 
 @Composable
-fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
+private fun CategoryCard(category: Category, textColor: Color) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .width(175.5.dp)
             .height(189.11.dp)
             .padding(8.dp)
-            .clickable { onClick() },
+            .clickable { },
         colors = CardDefaults.cardColors(containerColor = category.color)
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxSize(), // Fill the card size
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = category.imageRes),
                 contentDescription = category.displayName,
-                modifier = Modifier.size(64.dp), // Adjust the size as needed
+                modifier = Modifier.size(64.dp),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(16.dp)) // Add space between image and text
+            Spacer(modifier = Modifier.height(16.dp))
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -131,31 +143,24 @@ fun CategoryCard(category: Category, color: Color, onClick: () -> Unit) {
                     category.displayName,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center // Center the text within the box
+                    textAlign = TextAlign.Center,
+                    color = textColor
                 )
             }
         }
     }
 }
 
-fun onClick() {
-    TODO("Not yet implemented")
+private fun navigateFilters(navController: NavController) {
+    navController.navigate("filters")
+}
+
+private fun navigateSearch(navController: NavController, searchQuery: String) {
+    navController.navigate("search/$searchQuery")
 }
 
 @Composable
-fun getCategoryColor(category: Category): Color {
-    return when (category) {
-        Category.FRUITS_VEGETABLES -> Color.Green
-        Category.OIL_GHEE -> Color.Yellow
-        Category.MEAT_FISH -> Color.Red
-        Category.BAKERY_SNACKS -> Color.Magenta
-        Category.DAIRY_EGGS -> Color.Blue
-        Category.BEVERAGES -> Color.Cyan
-        Category.OTHER -> Color.Gray
-    }
+fun ExplorePreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    ExploreContent(navController, isDarkModeEnabled)
 }
 
-@Composable
-fun ExplorePreview(navController: NavHostController) {
-    ExploreContent(navController)
-}
