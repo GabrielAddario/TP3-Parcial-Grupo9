@@ -69,7 +69,7 @@ fun CheckOutScreen(navController: NavController) {
                         tint = Color.Black,
                         modifier = Modifier
                             .size(24.dp)
-                            .clickable(onClick = {}),
+                            .clickable(onClick = {navigateMyCart(navController)}),
                     )
                 }
 
@@ -182,5 +182,10 @@ fun CheckOutScreen(navController: NavController) {
 
 private fun navigateOrderAccepted(navController: NavController) {
     navController.navigate("order_accepted") {
+    }
+}
+
+private fun navigateMyCart(navController: NavController) {
+    navController.navigate("my_cart_screen") {
     }
 }

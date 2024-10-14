@@ -12,6 +12,7 @@ import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.MainScreen
 import com.example.appnectar.screens.AccountScreenPreview
 import com.example.appnectar.screens.CheckoutScreenPreview
+import com.example.appnectar.screens.ErrorScreenPreview
 import com.example.appnectar.screens.ExplorePreview
 import com.example.appnectar.screens.FavouriteScreenPreview
 import com.example.appnectar.screens.FilterScreenPreview
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
     val navController = rememberNavController()
+
     NavHost(navController = navController, startDestination = "splash_screen") {
         composable("splash_screen") { SplashScreen(navController) }
         composable("onboarding") { OnboardingPreview(navController) }
@@ -58,16 +60,14 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
                 AccountScreenPreview(navController, isDarkModeEnabled, onDarkModeToggle)
             }
         }
-        composable("search_screen/{searchQuery}") { backStackEntry ->
-            val searchQuery = backStackEntry.arguments?.getString("searchQuery") ?: ""
-            ProductListScreenPreview(navController, searchQuery)
-        }
+        composable("search_screen") { ProductListScreenPreview(navController) }
         composable("categories_screen/{category}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")?.let { Category.valueOf(it) }
             category?.let {
                 ProductsByCategoryScreen(navController, it, isDarkModeEnabled)
             }
         }
+        composable("error_screen") { ErrorScreenPreview(navController) }
     }
 }
 

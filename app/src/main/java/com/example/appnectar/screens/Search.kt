@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
@@ -29,25 +31,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.SearchCarts
 import com.example.appnectar.navController.navs.TopNavbar
 
 @Composable
-fun ProductListScreenPreview(navController: NavHostController, searchQuery: String) {
-    ProductListScreen()
+fun ProductListScreenPreview(navController: NavHostController) {
+    ProductListScreen(navController)
 }
 
 @Composable
-private fun ProductListScreen() {
+private fun ProductListScreen(navController: NavHostController) {
     val products = SearchCarts
-    val colorDivider = Color(0xFFE2E2E2)
 
     Scaffold(
         topBar = { TopNavbar("Search") },
@@ -59,7 +62,7 @@ private fun ProductListScreen() {
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            SearchBar()
+            SearchBar(navController)
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -74,7 +77,7 @@ private fun ProductListScreen() {
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(navController: NavController) {
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
 
     Row(

@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
@@ -47,6 +49,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
 import com.example.appnectar.navController.navs.BottomNavBar
 
@@ -72,6 +75,12 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
                 textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        navController.navigate("search_screen")
+                    }
+                ),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -159,7 +168,7 @@ private fun navigateFilters(navController: NavController) {
 }
 
 private fun navigateSearch(navController: NavController, searchQuery: String) {
-    navController.navigate("search/$searchQuery")
+    navController.navigate("search_screen")
 }
 
 private fun navigateToCategory(navController: NavController, category: Category) {

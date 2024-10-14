@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
+fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
 
     Column(
@@ -32,10 +32,10 @@ fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
             .padding(24.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        // Profile Section
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_profile),
+                painter = painterResource(id = R.drawable.foto_account),
                 contentDescription = null,
                 modifier = Modifier
                     .size(88.dp)
@@ -50,7 +50,7 @@ fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
         }
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Settings Options
+
         MenuItem(icon = R.drawable.ic_orders, label = "Orders", textColor = textColor)
         HorizontalDivider()
         MenuItem(icon = R.drawable.ic_details, label = "My Details", textColor = textColor)
@@ -68,7 +68,6 @@ fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Dark Mode Toggle
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Dark mode", fontSize = 20.sp, color = textColor)
             Spacer(modifier = Modifier.weight(1f))
@@ -86,9 +85,8 @@ fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Log Out Button
         Button(
-            onClick = { /* No functionality */ },
+            onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp),
@@ -101,11 +99,12 @@ fun AccountScreen(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.align(Alignment.CenterStart)
                 ) {
-                    Spacer(modifier = Modifier.width(16.dp)) // Añade un espacio antes del ícono
+                    Spacer(modifier = Modifier.width(16.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.ic_exit),
                         contentDescription = "Log Out",
                         modifier = Modifier.size(24.dp)
+                            .clickable { navController.navigate("sign_in") }
                     )
                 }
                 Text(
@@ -124,8 +123,7 @@ fun MenuItem(icon: Int, label: String, textColor: Color) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
-            .clickable { /* No functionality */ },
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(painter = painterResource(id = icon), contentDescription = label, modifier = Modifier.size(28.dp))
@@ -141,5 +139,5 @@ fun MenuItem(icon: Int, label: String, textColor: Color) {
 
 @Composable
 fun AccountScreenPreview(navController: NavController, isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
-    AccountScreen(isDarkModeEnabled, onDarkModeToggle)
+    AccountScreen(navController, isDarkModeEnabled, onDarkModeToggle)
 }

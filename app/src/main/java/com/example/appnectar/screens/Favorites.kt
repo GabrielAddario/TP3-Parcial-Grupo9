@@ -2,6 +2,7 @@ package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -54,7 +55,7 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 }
             }
             Button(
-                onClick = { /* Acción para rastrear pedido */ },
+                onClick = { navigateErrorScreen(navController) },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
@@ -140,6 +141,10 @@ fun CardProduct(navController: NavController, product: Product, textColor: Color
 
 private fun navigateProductDetails(navController: NavController, productId: Int) {
     navController.navigate("product_details/$productId")
+}
+
+private fun navigateErrorScreen(navController: NavController) {
+    navController.navigate("error_screen")
 }
 
 @Composable
