@@ -88,7 +88,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
 }
 
 @Composable
-fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
+private fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
     Card(
         shape = RoundedCornerShape(18.dp),
         modifier = Modifier

@@ -9,48 +9,65 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import com.example.appnectar.dataClass.Product
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.ArrowBackIos
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.example.appnectar.R
-import com.example.appnectar.dataClass.SearchCarts
-import com.example.appnectar.navController.navs.TopNavbar
+import com.example.appnectar.dataClass.Category
+import com.example.appnectar.dataClass.Product
+import com.example.appnectar.dataClass.ProductListItems
 
 @Composable
-fun ProductListScreenPreview(navController: NavHostController, searchQuery: String) {
-    ProductListScreen()
+fun CategoriesScreenPreview(
+    navController: NavController, category: Category,  isDarkModeEnabled: Boolean
+) {
+    CategoriesScreenPreview(navController, category, isDarkModeEnabled)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProductListScreen() {
-    val products = SearchCarts
-    val colorDivider = Color(0xFFE2E2E2)
+fun ProductsByCategoryScreen(navController: NavController, category: Category, isDarkModeEnabled: Boolean) {
+    val products = ProductListItems.filter { it.category == category }
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
-        topBar = { TopNavbar("Search") },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = category.displayName,
+                        fontSize = 24.sp,
+                        textAlign = TextAlign.Center
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { /* Acción del botón atrás */ }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBackIos,
+                            contentDescription = "Back",
+                            tint = textColor,
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clickable { navigateHomeScreen(navController) }
+//                                .align(Alignment.TopStart)
+                        )
+                    }
+                },
+            )
+        },
         bottomBar = { }
     ) { paddingValues ->
         Column(
@@ -59,14 +76,14 @@ private fun ProductListScreen() {
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            SearchBar()
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(8.dp),
             ) {
                 items(products) { product ->
-                    CardProduct(product = product)
+                    ProductCard(product = product, navController, textColor, backgroundColor)
                 }
             }
         }
@@ -74,38 +91,7 @@ private fun ProductListScreen() {
 }
 
 @Composable
-fun SearchBar() {
-    val searchText = remember { mutableStateOf(TextFieldValue("")) }
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFF0F0F0), shape = CircleShape)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = "Search Icon",
-            tint = Color.Gray
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        BasicTextField(
-            value = searchText.value,
-            onValueChange = { searchText.value = it },
-            modifier = Modifier.fillMaxWidth(),
-            decorationBox = { innerTextField ->
-                if (searchText.value.text.isEmpty()) {
-                    Text(text = "Egg", color = Color.Gray)
-                }
-                innerTextField()
-            }
-        )
-    }
-}
-
-@Composable
-private fun CardProduct(product: Product) {
+private fun ProductCard(product: Product, navController: NavController, textColor: Color, backgroundColor: Color) {
     Card(
         modifier = Modifier
             .width(160.dp)
@@ -120,13 +106,20 @@ private fun CardProduct(product: Product) {
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Imagen del producto
-            Image(
-                painter = painterResource(id = product.image),
-                contentDescription = "Product Image",
-                modifier = Modifier.size(90.dp),
-                contentScale = ContentScale.Fit
-            )
+
+            Box(
+                modifier = Modifier
+                    .size(90.dp)
+                    .clickable { navigateProductDetails(navController, product.id) },
+                contentAlignment = Alignment.Center
+            ) {
+                // Imagen del producto
+                Image(
+                    painter = painterResource(id = product.image),
+                    contentDescription = "Product Image",
+                    contentScale = ContentScale.Fit
+                )
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -178,10 +171,30 @@ private fun CardProduct(product: Product) {
                         contentDescription = "Button",
                         modifier = Modifier
                             .size(45.dp)
-                            .clickable { /* Hay que agregar el producto al carrito*/ }
+                            .clickable { navigateMyCart(navController) },
                     )
                 }
             }
         }
+    }
+}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun ProductsByCategoryScreenPreview() {
+//    ProductsByCategoryScreen(category = Category.BEVERAGES)
+//}
+
+private fun navigateHomeScreen(navController: NavController) {
+    navController.navigate("home_screen") {
+    }
+}
+
+private fun navigateProductDetails(navController: NavController, productId: Int) {
+    navController.navigate("product_details/$productId")
+}
+
+private fun navigateMyCart(navController: NavController) {
+    navController.navigate("my_cart_screen") {
     }
 }
