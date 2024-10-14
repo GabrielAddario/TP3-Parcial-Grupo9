@@ -49,7 +49,7 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 ) {
                     items(products) { product ->
                         CardProduct(navController, product, textColor, backgroundColor)
-                        Divider(color = colorDivider, thickness = 1.dp)
+                        HorizontalDivider(thickness = 1.dp, color = colorDivider)
                     }
                 }
             }
@@ -60,6 +60,7 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 contentPadding = PaddingValues(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
+                    .padding(bottom = 16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
                 Text(text = "Add All To Cart", color = Color.White, fontSize = 16.sp)

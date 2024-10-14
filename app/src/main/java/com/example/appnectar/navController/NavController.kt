@@ -2,6 +2,7 @@ package com.example.appnectar.navController
 
 import OnboardingPreview
 import SplashScreenPreview
+import android.window.SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
@@ -13,12 +14,12 @@ import com.example.appnectar.screens.AccountScreenPreview
 import com.example.appnectar.screens.CheckoutScreenPreview
 import com.example.appnectar.screens.ExplorePreview
 import com.example.appnectar.screens.FavouriteScreenPreview
-
 import com.example.appnectar.screens.FilterScreenPreview
 import com.example.appnectar.screens.HomeScreenPreview
 import com.example.appnectar.screens.MyCartScreenPreview
 import com.example.appnectar.screens.PreviewOrderAcceptedScreen
 import com.example.appnectar.screens.ProductDetailScreenPreview
+import com.example.appnectar.screens.ProductListScreenPreview
 import com.example.appnectar.screens.SelectLocationScreenPreview
 import com.example.appnectar.screens.SignInScreenPreview
 import com.example.appnectar.screens.SignUpScreenPreview
@@ -44,12 +45,21 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
             ProductDetailScreenPreview(navController = navController, productId, isDarkModeEnabled)
         }
         composable("checkout_screen") { CheckoutScreenPreview(navController, isDarkModeEnabled) }
-        composable("order_accepted") { PreviewOrderAcceptedScreen(navController, isDarkModeEnabled) }
+        composable("order_accepted") {
+            PreviewOrderAcceptedScreen(
+                navController,
+                isDarkModeEnabled
+            )
+        }
         composable("filters") { FilterScreenPreview(navController, isDarkModeEnabled) }
         composable("account_screen") {
             MainScreen(navController) {
                 AccountScreenPreview(navController, isDarkModeEnabled, onDarkModeToggle)
             }
+        }
+        composable("search_screen/{searchQuery}") { backStackEntry ->
+            val searchQuery = backStackEntry.arguments?.getString("searchQuery") ?: ""
+            ProductListScreenPreview(navController, searchQuery)
         }
     }
 }
@@ -65,18 +75,4 @@ fun SplashScreen(navController: NavHostController) {
         }
     }
     SplashScreenPreview()
-}
-
-@Composable
-fun OnboardingPreview(navController: NavHostController) {
-    // Simulate onboarding completion
-    LaunchedEffect(Unit) {
-        launch {
-            delay(2000)
-            navController.navigate("location_screen") {
-                popUpTo("onboarding") { inclusive = true }
-            }
-        }
-    }
-    // Your Onboarding UI here
 }

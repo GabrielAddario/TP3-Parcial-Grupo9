@@ -68,11 +68,14 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 contentPadding = PaddingValues(),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
+                    .padding(bottom = 16.dp)
                     .size(width = 350.dp, height = 60.dp),
             ) {
                 Text(text = "Go to Checkout", color = Color.White, fontSize = 16.sp)
             }
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         AnimatedVisibility(
             visible = showCheckoutScreen,
