@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 @Composable
 fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val colorDivider = Color(0xFFE2E2E2)
 
     Column(
         modifier = Modifier
@@ -50,26 +51,31 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
         }
         Spacer(modifier = Modifier.height(24.dp))
 
-
+        HorizontalDivider(color = colorDivider, thickness = 2.dp)
         MenuItem(icon = R.drawable.ic_orders, label = "Orders", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_details, label = "My Details", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_address, label = "Delivery Address", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_payment, label = "Payment Methods", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_promo, label = "Promo Cord", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_notifications, label = "Notifications", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
         MenuItem(icon = R.drawable.ic_help, label = "Help", textColor = textColor)
-        HorizontalDivider()
+        Divider(color = colorDivider, thickness = 1.dp)
 
-        Spacer(modifier = Modifier.height(24.dp))
+//        Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Dark mode", fontSize = 20.sp, color = textColor)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Dark mode", fontSize = 20.sp, color = textColor, modifier = Modifier.padding(start = 45.dp))
             Spacer(modifier = Modifier.weight(1f))
             Switch(
                 checked = isDarkModeEnabled,
@@ -82,14 +88,15 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
                 )
             )
         }
+        Divider(color = colorDivider, thickness = 1.dp)
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.padding(vertical = 15.dp))
 
         Button(
             onClick = { },
             modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp),
+                .width(364.dp)
+                .height(67.dp),
             shape = RoundedCornerShape(30),
             contentPadding = PaddingValues(),
             colors = ButtonDefaults.buttonColors(Color(0xFFE0E0E0))
@@ -103,6 +110,7 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
                     Icon(
                         painter = painterResource(id = R.drawable.ic_exit),
                         contentDescription = "Log Out",
+                        tint = Color(0xFF53B175),
                         modifier = Modifier.size(24.dp)
                             .clickable { navController.navigate("sign_in") }
                     )
