@@ -8,16 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,16 +25,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.dataClass.Categories
 
-
 @Composable
-private fun FilterScreen() {
+private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolean) {
     var categoriesState by remember { mutableStateOf(listOf(false, false, false, false)) }
     var brandsState by remember { mutableStateOf(listOf(false, false, false, false)) }
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
+    val headerBackgroundColor = if (isDarkModeEnabled) Color(0xFF2C2C2C) else Color.White
+    val contentBackgroundColor = if (isDarkModeEnabled) Color(0xFF2C2C2C) else Color(0xFFeeeeee)
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(backgroundColor)
     ) {
         Column(
             modifier = Modifier
@@ -53,7 +48,7 @@ private fun FilterScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White) // Fondo blanco para el encabezado
+                    .background(headerBackgroundColor)
                     .padding(bottom = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -71,13 +66,17 @@ private fun FilterScreen() {
                         modifier = Modifier
                             .size(40.dp)
                             .padding(start = 15.dp)
-                            .clickable { //navigateExploreScreen(navController)
-                            }
+                            .clickable { navigateExploreScreen(navController) }
                             .align(Alignment.TopStart)
                     )
 
                     Spacer(modifier = Modifier.height(1.dp))
-                    Text(text = "Filters", style = MaterialTheme.typography.titleLarge,  textAlign = TextAlign.Center)
+                    Text(
+                        text = "Filters",
+                        style = MaterialTheme.typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        color = textColor
+                    )
                     Spacer(modifier = Modifier.height(1.dp))
                 }
             }
@@ -89,7 +88,7 @@ private fun FilterScreen() {
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
-                        color = Color(0xFFeeeeee),
+                        color = contentBackgroundColor,
                         shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp)
                     )
                     .padding(horizontal = 16.dp)
@@ -105,7 +104,12 @@ private fun FilterScreen() {
                             .padding(16.dp)
                     ) {
                         Column {
-                            Text(text = "Categories", style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp)
+                            Text(
+                                text = "Categories",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 30.sp,
+                                color = textColor
+                            )
                             Spacer(modifier = Modifier.height(8.dp))
                             val categories = Categories
                             categories.forEachIndexed { index, category ->
@@ -122,7 +126,7 @@ private fun FilterScreen() {
                                     Text(
                                         text = category,
                                         fontSize = 18.sp,
-                                        color = if (categoriesState[index]) Color(0xFF53B175) else Color.Black
+                                        color = if (categoriesState[index]) Color(0xFF53B175) else textColor
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
@@ -138,7 +142,12 @@ private fun FilterScreen() {
                             .padding(16.dp)
                     ) {
                         Column {
-                            Text(text = "Brand", style = MaterialTheme.typography.bodyLarge, fontSize = 30.sp)
+                            Text(
+                                text = "Brand",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = 30.sp,
+                                color = textColor
+                            )
                             Spacer(modifier = Modifier.height(8.dp))
                             val brands = listOf("Individual Collection", "Cocola", "Ifad", "Kazi Farmas")
                             brands.forEachIndexed { index, brand ->
@@ -155,7 +164,7 @@ private fun FilterScreen() {
                                     Text(
                                         text = brand,
                                         fontSize = 18.sp,
-                                        color = if (brandsState[index]) Color(0xFF00A86B) else Color.Black
+                                        color = if (brandsState[index]) Color(0xFF00A86B) else textColor
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(4.dp)) // Espacio entre los elementos de la checklist
@@ -164,7 +173,7 @@ private fun FilterScreen() {
                     }
 
                     // Spacer to add space between content and button
-                    Spacer(modifier = Modifier.height(170.dp))
+                    Spacer(modifier = Modifier.height(260.dp))
 
                     Button(
                         onClick = { },
@@ -172,11 +181,13 @@ private fun FilterScreen() {
                         colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                         contentPadding = PaddingValues(),
                         modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                             .size(width = 350.dp, height = 60.dp),
                     ) {
                         Text(
                             text = "Apply Filter",
                             fontSize = 16.sp,
+                            color = Color.White
                         )
                     }
 
@@ -185,7 +196,7 @@ private fun FilterScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(35.dp)
-                            .background(Color(0xFFeeeeee))
+                            .background(contentBackgroundColor)
                     )
                 }
             }
@@ -232,11 +243,7 @@ private fun RoundedCornerCheckbox(
     }
 }
 
-
-@Preview
 @Composable
-fun FilterScreenPreview(
-    //navController: NavController
-) {
-    FilterScreen()
+fun FilterScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    FilterScreen(navController, isDarkModeEnabled)
 }

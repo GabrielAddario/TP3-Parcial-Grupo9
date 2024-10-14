@@ -15,7 +15,7 @@ import com.example.appnectar.dataClass.navItems
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    val items = navItems;
+    val items = navItems
     NavigationBar(
         containerColor = Color.White,
         contentColor = Color.Black,

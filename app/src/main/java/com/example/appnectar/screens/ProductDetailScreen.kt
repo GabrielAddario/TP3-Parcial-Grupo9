@@ -8,13 +8,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,16 +26,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.dataClass.ProductListItems
 
 @Composable
-fun ProductDetailScreenPreview(navController: NavController, productId: String?
+fun ProductDetailScreenPreview(
+    navController: NavController, productId: String?, isDarkModeEnabled: Boolean
 ) {
-    ProductDetailScreen(navController, productId)
+    ProductDetailScreen(navController, productId, isDarkModeEnabled)
 }
 
 @Composable
@@ -65,14 +63,17 @@ fun FavoriteButton() {
     }
 }
 
-
 @Composable
-private fun ProductDetailScreen(navController: NavController, productId: String?) {
+private fun ProductDetailScreen(navController: NavController, productId: String?, isDarkModeEnabled: Boolean) {
     val product = ProductListItems.find { it.id.toString() == productId }
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
+
     product?.let {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(backgroundColor)
                 .padding(16.dp)
         ) {
             Box(
@@ -86,7 +87,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
                     contentDescription = "Arrow",
-                    tint = Color.Gray,
+                    tint = textColor,
                     modifier = Modifier
                         .size(18.dp)
                         .clickable { navigateHomeScreen(navController) }
@@ -96,11 +97,11 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                 Text(
                     text = "Product Detail",
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor
                 )
             }
 
-            // Imagen del producto centrada
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -119,7 +120,6 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Detalles del producto con botón de corazón
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -128,13 +128,14 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                     Text(
                         text = it.title,
                         fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "${it.cant} ${it.typeSizes}, Price",
                         fontSize = 16.sp,
-                        color = Color.Gray
+                        color = textColor.copy(alpha = 0.7f)
                     )
                 }
                 FavoriteButton()
@@ -142,7 +143,6 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Precio y cantidad
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -151,20 +151,22 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                 Text(
                     text = "$${it.price}",
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HorizontalDivider(color = Color.Gray, thickness = 0.dp)
+            Divider(color = textColor.copy(alpha = 0.5f), thickness = 1.dp)
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Product Details",
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = textColor
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -172,12 +174,12 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
             Text(
                 text = it.description,
                 fontSize = 14.sp,
-                color = Color.Gray
+                color = textColor.copy(alpha = 0.7f)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HorizontalDivider(color = Color.Gray, thickness = 0.dp)
+            Divider(color = textColor.copy(alpha = 0.5f), thickness = 1.dp)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -185,7 +187,8 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                 Text(
                     text = "Nutritions",
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = textColor
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Box(
@@ -197,7 +200,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                     Text(
                         text = "100gr",
                         fontSize = 14.sp,
-                        color = Color.Gray
+                        color = textColor.copy(alpha = 0.7f)
                     )
                 }
                 Spacer(modifier = Modifier.width(4.dp))
@@ -205,7 +208,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = "Arrow",
-                        tint = Color.Gray,
+                        tint = textColor,
                         modifier = Modifier.size(16.dp)
                     )
                 }
@@ -213,7 +216,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HorizontalDivider(color = Color.Gray, thickness = 0.dp)
+            Divider(color = textColor.copy(alpha = 0.5f), thickness = 1.dp)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -225,7 +228,8 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                     Text(
                         text = "Reviews",
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Row {
@@ -240,7 +244,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                             contentDescription = "Arrow",
-                            tint = Color.Gray,
+                            tint = textColor,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -249,12 +253,12 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            HorizontalDivider(color = Color.Gray, thickness = 0.dp)
+            Divider(color = textColor.copy(alpha = 0.5f), thickness = 1.dp)
 
             Spacer(modifier = Modifier.height(70.dp))
 
             Button(
-                onClick = { navigateMyCart(navController)},
+                onClick = { navigateMyCart(navController) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(67.dp),

@@ -31,12 +31,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.appnectar.dataClass.SearchCarts
 import com.example.appnectar.navController.navs.TopNavbar
 
-@Preview(showBackground = true)
 @Composable
-fun ProductListScreenPreview() {
+fun ProductListScreenPreview(navController: NavHostController, searchQuery: String) {
     ProductListScreen()
 }
 

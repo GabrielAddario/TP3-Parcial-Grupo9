@@ -46,42 +46,50 @@ import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
 import androidx.compose.material.*
 import androidx.navigation.NavController
+import com.example.appnectar.navController.navs.BottomNavBar
 
 @Composable
-private fun ExploreContent(navController: NavController) {
+private fun ExploreContent(navController: NavController, isDarkModeEnabled: Boolean) {
     var searchQuery by remember { mutableStateOf("") }
+    val textColor = if (isDarkModeEnabled) Color.Black else Color.Black
+
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
+        bottomBar = { BottomNavBar(navController)}
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
+        Column(modifier = Modifier
+            .padding(paddingValues)
+            .padding(16.dp)) {
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search Store", fontSize = 15.sp, fontWeight = FontWeight.Light) },
+                placeholder = { Text("Search Store", fontSize = 15.sp, fontWeight = FontWeight.Light, color = textColor) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
-                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp),
+                textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon"
+                        contentDescription = "Search Icon",
+                        tint = textColor
                     )
                 },
                 trailingIcon = {
                     IconButton(onClick = { navigateFilters(navController) }) {
                         Icon(
-                            imageVector = Icons.Default.Tune, // Icono de configuración (puedes cambiarlo por otro)
-                            contentDescription = "Settings Icon"
+                            imageVector = Icons.Default.Tune,
+                            contentDescription = "Settings Icon",
+                            tint = textColor
                         )
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xFFF5F5F5), // Color de fondo similar al de la imagen
-                    focusedIndicatorColor = Color.Transparent, // Sin indicador de foco
-                    unfocusedIndicatorColor = Color.Transparent, // Sin indicador no enfocado
-                    cursorColor = Color.Black // Color del cursor
+                    backgroundColor = Color(0xFFF5F5F5),
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    cursorColor = textColor
                 )
             )
             LazyVerticalGrid(
@@ -93,7 +101,8 @@ private fun ExploreContent(navController: NavController) {
             ) {
                 items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
-                        category = category
+                        category = category,
+                        textColor = textColor
                     )
                 }
             }
@@ -102,7 +111,7 @@ private fun ExploreContent(navController: NavController) {
 }
 
 @Composable
-private fun CategoryCard(category: Category) {
+private fun CategoryCard(category: Category, textColor: Color) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
@@ -134,7 +143,8 @@ private fun CategoryCard(category: Category) {
                     category.displayName,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = textColor
                 )
             }
         }
@@ -142,12 +152,15 @@ private fun CategoryCard(category: Category) {
 }
 
 private fun navigateFilters(navController: NavController) {
-    navController.navigate("filters") {
-    }
+    navController.navigate("filters")
+}
+
+private fun navigateSearch(navController: NavController, searchQuery: String) {
+    navController.navigate("search/$searchQuery")
 }
 
 @Composable
-fun ExplorePreview(navController: NavController) {
-    ExploreContent(navController)
+fun ExplorePreview(navController: NavController, isDarkModeEnabled: Boolean) {
+    ExploreContent(navController, isDarkModeEnabled)
 }
 

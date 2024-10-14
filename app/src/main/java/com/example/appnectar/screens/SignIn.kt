@@ -184,7 +184,7 @@ private fun loginUser(email : String, password : String, context: Context, navCo
             override fun onResponse(call: Call<UserListItem>, response: Response<UserListItem>) {
                 if (response.isSuccessful) {
                     Toast.makeText(context, "Sign In Successful", Toast.LENGTH_SHORT).show()
-                    navController.navigate("home_screen")
+                    navController.navigate("location_screen")
                 } else {
                     Toast.makeText(context, "Invalid username or password", Toast.LENGTH_SHORT).show()
                 }
