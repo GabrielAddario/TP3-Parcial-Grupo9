@@ -2,13 +2,13 @@ package com.example.appnectar.navController
 
 import OnboardingPreview
 import SplashScreenPreview
-import android.window.SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.MainScreen
 import com.example.appnectar.screens.AccountScreenPreview
 import com.example.appnectar.screens.CheckoutScreenPreview
@@ -20,6 +20,7 @@ import com.example.appnectar.screens.MyCartScreenPreview
 import com.example.appnectar.screens.PreviewOrderAcceptedScreen
 import com.example.appnectar.screens.ProductDetailScreenPreview
 import com.example.appnectar.screens.ProductListScreenPreview
+import com.example.appnectar.screens.ProductsByCategoryScreen
 import com.example.appnectar.screens.SelectLocationScreenPreview
 import com.example.appnectar.screens.SignInScreenPreview
 import com.example.appnectar.screens.SignUpScreenPreview
@@ -60,6 +61,12 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
         composable("search_screen/{searchQuery}") { backStackEntry ->
             val searchQuery = backStackEntry.arguments?.getString("searchQuery") ?: ""
             ProductListScreenPreview(navController, searchQuery)
+        }
+        composable("categories_screen/{category}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category")?.let { Category.valueOf(it) }
+            category?.let {
+                ProductsByCategoryScreen(navController, it, isDarkModeEnabled)
+            }
         }
     }
 }

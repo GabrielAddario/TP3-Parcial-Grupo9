@@ -17,8 +17,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
@@ -45,9 +43,14 @@ import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
 import androidx.compose.material.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.navigation.NavController
 import com.example.appnectar.navController.navs.BottomNavBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ExploreContent(navController: NavController, isDarkModeEnabled: Boolean) {
     var searchQuery by remember { mutableStateOf("") }
@@ -86,7 +89,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xFFF5F5F5),
+                    containerColor = Color(0xFFF5F5F5),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     cursorColor = textColor
@@ -159,8 +162,11 @@ private fun navigateSearch(navController: NavController, searchQuery: String) {
     navController.navigate("search/$searchQuery")
 }
 
+private fun navigateToCategory(navController: NavController, category: Category) {
+    navController.navigate("categories_screen/${category.name}")
+}
+
 @Composable
 fun ExplorePreview(navController: NavController, isDarkModeEnabled: Boolean) {
     ExploreContent(navController, isDarkModeEnabled)
 }
-
