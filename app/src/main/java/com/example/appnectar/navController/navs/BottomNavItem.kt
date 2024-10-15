@@ -1,11 +1,17 @@
 package com.example.appnectar.navController.navs
 
-import com.example.appnectar.R
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.ui.graphics.vector.ImageVector
 
-sealed class BottomNavItem(val route: String, val iconResId: Int, val iconResIdSelected: Int, val title: String) {
-    data object Shop : BottomNavItem("home_screen", R.drawable.shop_logo, R.drawable.shop_logo_green, "Shop")
-    data object Explore : BottomNavItem("explore_screen", R.drawable.explore_logo, R.drawable.explore_logo_green, "Explore")
-    data object Cart : BottomNavItem("my_cart_screen", R.drawable.cart_logo, R.drawable.cart_logo_green, "Cart")
-    data object Favourite : BottomNavItem("favourite_screen", R.drawable.favourite_logo, R.drawable.favourite_logo_green, "Favourite")
-    data object Account : BottomNavItem("account_screen", R.drawable.account_logo, R.drawable.account_logo_green, "Account")
+sealed class BottomNavItem(val route: String, val icon: ImageVector, val title: String) {
+    data object Shop : BottomNavItem("home_screen", Icons.Filled.Storefront, "Shop")
+    data object Explore : BottomNavItem("explore_screen", Icons.Filled.Search, "Explore")
+    data object Cart : BottomNavItem("my_cart_screen", Icons.Filled.ShoppingCart, "Cart")
+    data object Favourite : BottomNavItem("favourite_screen", Icons.Filled.Favorite,"Favourite")
+    data object Account : BottomNavItem("account_screen", Icons.Filled.AccountBox, "Account")
 }

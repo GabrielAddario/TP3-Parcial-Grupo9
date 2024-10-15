@@ -1,5 +1,6 @@
 package com.example.appnectar.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import com.example.appnectar.R
 import androidx.navigation.NavController
@@ -35,13 +37,13 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
     ) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                painter = painterResource(id = R.drawable.foto_account),
-                contentDescription = null,
+            Image(
+                painter = painterResource(id = R.drawable.ic_profile),
+                contentDescription = "Profile Picture",
                 modifier = Modifier
-                    .size(88.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
+                    .size(80.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(24.dp))
             Column {
@@ -67,7 +69,6 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
         MenuItem(icon = R.drawable.ic_help, label = "Help", textColor = textColor)
         Divider(color = colorDivider, thickness = 1.dp)
 
-//        Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
         Row(
             modifier = Modifier

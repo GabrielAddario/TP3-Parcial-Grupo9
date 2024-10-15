@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,9 +27,18 @@ fun BottomNavBar(navController: NavController) {
         items.forEach { item ->
             val isSelected = currentRoute == item.route
             NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                    }
+                },
                 icon = {
                     Icon(
-                        painter = painterResource(id = if (isSelected) item.iconResIdSelected else item.iconResId),
+                        imageVector = item.icon,
+                        tint = if (isSelected) Color(0xFF53B175) else Color.Black,
                         contentDescription = item.title,
                         modifier = Modifier.size(30.dp)
                     )
@@ -39,14 +49,6 @@ fun BottomNavBar(navController: NavController) {
                         color = if (isSelected) Color(0xFF53B175) else Color.Black
                     )
                 },
-                selected = isSelected,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                    }
-                }
             )
         }
     }
