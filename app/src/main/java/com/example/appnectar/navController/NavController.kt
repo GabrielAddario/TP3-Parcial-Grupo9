@@ -67,7 +67,7 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
                 ProductsByCategoryScreen(navController, it, isDarkModeEnabled)
             }
         }
-        composable("error_screen") { ErrorScreenPreview(navController) }
+        composable("error_screen") { ErrorScreenPreview() }
     }
 }
 
