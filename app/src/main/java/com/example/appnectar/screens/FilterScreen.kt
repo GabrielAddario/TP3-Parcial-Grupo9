@@ -44,7 +44,6 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-            // Header
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,7 +82,6 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Nested Column for the rest of the content
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -98,7 +96,6 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                         .fillMaxHeight()
                         .padding(bottom = 16.dp)
                 ) {
-                    // Categories Section
                     Box(
                         modifier = Modifier
                             .padding(16.dp)
@@ -136,7 +133,6 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Brand Section
                     Box(
                         modifier = Modifier
                             .padding(16.dp)
@@ -172,8 +168,7 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                         }
                     }
 
-                    // Spacer to add space between content and button
-                    Spacer(modifier = Modifier.height(260.dp))
+                    Spacer(modifier = Modifier.height(180.dp))
 
                     Button(
                         onClick = { },
@@ -190,6 +185,8 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                             color = Color.White
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     // Box to select the white space below the button and make it light gray
                     Box(

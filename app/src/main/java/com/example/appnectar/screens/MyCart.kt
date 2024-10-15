@@ -23,26 +23,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
 import com.example.appnectar.dataClass.MyCarts
 import com.example.appnectar.navController.navs.BottomNavBar
+import com.example.appnectar.viewmodel.CartViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
-    val products = MyCarts
+fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartViewModel: CartViewModel = viewModel()) {
+    val products by cartViewModel.products.collectAsState()
+    val totalCost by cartViewModel.totalCost.collectAsState()
     val colorDivider = Color(0xFFE2E2E2)
     var showCheckoutScreen by remember { mutableStateOf(false) }
+    var showBottomNavBar by remember { mutableStateOf(true) }
 
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
-        topBar = { TopNavbar("My Cart") },
-        bottomBar = { BottomNavBar(navController) }
+        topBar = { TopNavbar("My Cart", isDarkModeEnabled) },
+        bottomBar = { if (showBottomNavBar) BottomNavBar(navController) }
     ) { paddingValues ->
         Box(modifier = Modifier
             .fillMaxSize()
@@ -65,7 +69,10 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 }
             }
             Button(
-                onClick = { showCheckoutScreen = true },
+                onClick = {
+                    showBottomNavBar = false
+                    showCheckoutScreen = true
+                },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
@@ -76,16 +83,22 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
             ) {
                 Text(text = "Go to Checkout", color = Color.White, fontSize = 16.sp)
             }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        AnimatedVisibility(
-            visible = showCheckoutScreen,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it })
-        ) {
-            CheckOutScreen(navController = navController)
+            Spacer(modifier = Modifier.height(16.dp))
+            AnimatedVisibility(
+                visible = showCheckoutScreen,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                CheckOutScreen(
+                    navController = navController,
+                    isDarkModeEnabled = isDarkModeEnabled,
+                    totalCost = totalCost,
+                    onClose = {
+                        showCheckoutScreen = false
+                        showBottomNavBar = true
+                    }
+                )
+            }
         }
     }
 }

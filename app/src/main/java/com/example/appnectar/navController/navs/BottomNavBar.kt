@@ -26,9 +26,18 @@ fun BottomNavBar(navController: NavController) {
         items.forEach { item ->
             val isSelected = currentRoute == item.route
             NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                    }
+                },
                 icon = {
                     Icon(
-                        painter = painterResource(id = if (isSelected) item.iconResIdSelected else item.iconResId),
+                        imageVector = item.icon,
+                        tint = if (isSelected) Color(0xFF53B175) else Color.Black,
                         contentDescription = item.title,
                         modifier = Modifier.size(30.dp)
                     )
@@ -39,14 +48,6 @@ fun BottomNavBar(navController: NavController) {
                         color = if (isSelected) Color(0xFF53B175) else Color.Black
                     )
                 },
-                selected = isSelected,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                    }
-                }
             )
         }
     }

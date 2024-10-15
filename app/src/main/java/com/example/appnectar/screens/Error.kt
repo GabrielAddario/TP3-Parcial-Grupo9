@@ -39,8 +39,12 @@ private fun ErrorPopUp(
     onRetry: () -> Unit,
     onBackToHome: () -> Unit,
     showDialog: Boolean,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    isDarkModeEnabled: Boolean
 ) {
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
+
     if (showDialog) {
         Dialog(
             onDismissRequest = onDismiss,
@@ -53,7 +57,7 @@ private fun ErrorPopUp(
                     .padding(16.dp)
                     .background(Color.Transparent),
                 shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
+                colors = CardDefaults.cardColors(containerColor = backgroundColor),
                 elevation = CardDefaults.cardElevation(8.dp)
             ){
                 Column(
@@ -66,7 +70,7 @@ private fun ErrorPopUp(
                         modifier = Modifier.fillMaxWidth(),
                         contentAlignment = Alignment.TopStart
                     ) {
-                        IconButton(onClick = onDismiss) {
+                        IconButton(onClick = onRetry) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Close"
@@ -87,7 +91,7 @@ private fun ErrorPopUp(
                         text = "Oops! Order Failed",
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
-                        color = Color.Black
+                        color = textColor
                     )
                     Text(
                         text = "Something went tembly wrong.",
@@ -111,7 +115,7 @@ private fun ErrorPopUp(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     TextButton(onClick = onBackToHome) {
-                        Text(text = "Back to home", color = Color.Black)
+                        Text(text = "Back to home", color = textColor)
                     }
                 }
             }
@@ -119,15 +123,18 @@ private fun ErrorPopUp(
     }
 }
 
+//@Preview
 @Composable
-fun ErrorScreenPreview(navController: NavController) {
+fun ErrorScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
     var showErrorDialog by remember { mutableStateOf(true) }
     ErrorPopUp(
         onRetry = { navController.navigate("favourite_screen")
              },
-        onBackToHome = { navController.navigate("home_screen")
+        onBackToHome = {
+            navController.navigate("home_screen")
                        },
         showDialog = showErrorDialog,
-        onDismiss = { showErrorDialog = false }
+        onDismiss = { showErrorDialog = false},
+        isDarkModeEnabled = isDarkModeEnabled
     )
 }

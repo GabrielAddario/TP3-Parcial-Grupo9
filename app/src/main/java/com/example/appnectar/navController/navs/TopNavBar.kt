@@ -24,19 +24,21 @@ class TopNavBar : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TopNavbar(titleText = String())
+            TopNavbar(titleText = String(), isDarkModeEnabled = false)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavbar(titleText: String) {
+fun TopNavbar(titleText: String, isDarkModeEnabled: Boolean) {
     var expanded by remember { mutableStateOf(false) }
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
+            containerColor = backgroundColor,
         ),
         title = {
             Row(
@@ -67,16 +69,18 @@ fun TopNavbar(titleText: String) {
                 Text(
                     titleText,
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = textColor
                 )
                 Spacer(modifier = Modifier.weight(0.5f))
             }
         }
     )
+    HorizontalDivider(color = Color.Gray, thickness = 1.dp)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TopNavbarPreview() {
-    TopNavbar(titleText = String())
+    TopNavbar(titleText = String(), isDarkModeEnabled = false)
 }
