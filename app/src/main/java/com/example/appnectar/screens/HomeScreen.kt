@@ -53,7 +53,7 @@ private fun HomeScreenContent(navController: NavController, isDarkModeEnabled: B
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopNavbar("Shop") },
+        topBar = { TopNavbar("Shop", isDarkModeEnabled) },
         bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         val scrollState = rememberScrollState()

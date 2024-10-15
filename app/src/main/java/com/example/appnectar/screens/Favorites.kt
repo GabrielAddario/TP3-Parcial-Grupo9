@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.FavoriteItems
 import com.example.appnectar.dataClass.Product
@@ -36,8 +34,8 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
 
 
     Scaffold(
-        topBar = { TopNavbar("Favorites") },
-        bottomBar = { BottomNavBar(navController) }
+        topBar = { TopNavbar("Favorites", isDarkModeEnabled) },
+        bottomBar = {  BottomNavBar(navController)  }
     ) { paddingValues ->
         Box(modifier = Modifier
             .fillMaxSize()
@@ -58,7 +56,7 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
                 }
             }
             Button(
-                onClick = { /* Acción para rastrear pedido */ },
+                onClick = { navigateErrorScreen(navController) },
                 shape = RoundedCornerShape(30),
                 colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                 contentPadding = PaddingValues(),
@@ -144,6 +142,10 @@ fun CardProduct(navController: NavController, product: Product, textColor: Color
 
 private fun navigateProductDetails(navController: NavController, productId: Int) {
     navController.navigate("product_details/$productId")
+}
+
+private fun navigateErrorScreen(navController: NavController) {
+    navController.navigate("error_screen")
 }
 
 @Composable

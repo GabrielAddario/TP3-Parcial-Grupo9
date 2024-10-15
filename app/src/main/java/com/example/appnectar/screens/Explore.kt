@@ -17,8 +17,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
@@ -46,8 +46,11 @@ import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
 import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.navController.navs.BottomNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,8 +60,8 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
     val textColor = if (isDarkModeEnabled) Color.Black else Color.Black
 
     Scaffold(
-        topBar = { TopNavbar("Find Categories") },
-        bottomBar = { BottomNavBar(navController) }
+        topBar = { TopNavbar("Find Categories", isDarkModeEnabled)},
+        bottomBar = { BottomNavBar(navController)}
     ) { paddingValues ->
         Column(modifier = Modifier
             .padding(paddingValues)
@@ -72,6 +75,12 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     .padding(bottom = 16.dp),
                 shape = RoundedCornerShape(8.dp),
                 textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        navController.navigate("search_screen")
+                    }
+                ),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -89,7 +98,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xFFF5F5F5),
+                    containerColor = Color(0xFFF5F5F5),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     cursorColor = textColor
@@ -159,7 +168,7 @@ private fun navigateFilters(navController: NavController) {
 }
 
 private fun navigateSearch(navController: NavController, searchQuery: String) {
-    navController.navigate("search/$searchQuery")
+    navController.navigate("search_screen")
 }
 
 private fun navigateToCategory(navController: NavController, category: Category) {

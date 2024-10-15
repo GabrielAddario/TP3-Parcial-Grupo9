@@ -39,14 +39,14 @@ fun ProductDetailScreenPreview(
 }
 
 @Composable
-fun Counter() {
+fun Counter(textColor: Color) {
     var count by remember { mutableStateOf(1) }
     IconButton(onClick = { if (count > 1) count-- }) {
-        Icon(Icons.Filled.Remove, contentDescription = "Remove")
+        Icon(Icons.Filled.Remove, contentDescription = "Remove", tint = textColor)
     }
-    Text(text = count.toString(), fontSize = 18.sp)
+    Text(text = count.toString(), fontSize = 18.sp, color = textColor)
     IconButton(onClick = { count++ }) {
-        Icon(Icons.Filled.Add, contentDescription = "Add")
+        Icon(Icons.Filled.Add, contentDescription = "Add", tint = textColor)
     }
 }
 
@@ -146,7 +146,7 @@ private fun ProductDetailScreen(navController: NavController, productId: String?
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Counter()
+                Counter(textColor)
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     text = "$${it.price}",

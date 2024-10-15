@@ -25,14 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.appnectar.R
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
+import com.example.appnectar.dataClass.MyCarts
 import com.example.appnectar.navController.navs.BottomNavBar
 import com.example.appnectar.viewmodel.CartViewModel
 
-
-// En MyCart.kt
-// En MyCart.kt
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartViewModel: CartViewModel = viewModel()) {
@@ -46,7 +45,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartV
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
-        topBar = { TopNavbar("My Cart") },
+        topBar = { TopNavbar("My Cart", isDarkModeEnabled) },
         bottomBar = { if (showBottomNavBar) BottomNavBar(navController) }
     ) { paddingValues ->
         Box(modifier = Modifier
@@ -65,7 +64,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartV
                 ) {
                     items(products) { product ->
                         ProductCard(product, textColor, backgroundColor, navController)
-                        Divider(thickness = 1.dp, color = colorDivider)
+                        HorizontalDivider(thickness = 1.dp, color = colorDivider)
                     }
                 }
             }
@@ -103,6 +102,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartV
         }
     }
 }
+
 @Composable
 private fun ProductCard(product: Product, textColor: Color, backgroundColor: Color, navController: NavController) {
     Card(
@@ -145,7 +145,7 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close",
-                        tint = Color.Black,
+                        tint = textColor,
                         modifier = Modifier
                             .size(24.dp)
                             .clickable(onClick = {}),
@@ -166,13 +166,13 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Counter()
+                    Counter(textColor)
                     Spacer(modifier = Modifier.padding(25.dp))
                     Text(
                         text = "$${product.price}",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = textColor, // Ensure the text color is applied here
+                        color = textColor,
                         lineHeight = 27.sp,
                         textAlign = TextAlign.End
                     )
