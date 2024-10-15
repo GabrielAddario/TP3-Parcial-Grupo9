@@ -132,7 +132,7 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Close",
-                        tint = Color.Black,
+                        tint = textColor,
                         modifier = Modifier
                             .size(24.dp)
                             .clickable(onClick = {}),
@@ -153,13 +153,13 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Counter()
+                    Counter(textColor)
                     Spacer(modifier = Modifier.padding(25.dp))
                     Text(
                         text = "$${product.price}",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
+                        color = textColor,
                         lineHeight = 27.sp,
                         textAlign = TextAlign.End
                     )
