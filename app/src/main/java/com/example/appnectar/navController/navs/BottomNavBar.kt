@@ -15,39 +15,39 @@ import com.example.appnectar.dataClass.navItems
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    val items = navItems
-    NavigationBar(
-        containerColor = Color.White,
-        contentColor = Color.Black,
-        modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-    ) {
-        val navBackStackEntry = navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry.value?.destination?.route
-        items.forEach { item ->
-            val isSelected = currentRoute == item.route
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        painter = painterResource(id = if (isSelected) item.iconResIdSelected else item.iconResId),
-                        contentDescription = item.title,
-                        modifier = Modifier.size(30.dp)
-                    )
-                },
-                label = {
-                    Text(
-                        text = item.title,
-                        color = if (isSelected) Color(0xFF53B175) else Color.Black
-                    )
-                },
-                selected = isSelected,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
+        val items = navItems
+        NavigationBar(
+            containerColor = Color.White,
+            contentColor = Color.Black,
+            modifier = Modifier.clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+        ) {
+            val navBackStackEntry = navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry.value?.destination?.route
+            items.forEach { item ->
+                val isSelected = currentRoute == item.route
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            painter = painterResource(id = if (isSelected) item.iconResIdSelected else item.iconResId),
+                            contentDescription = item.title,
+                            modifier = Modifier.size(30.dp)
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = item.title,
+                            color = if (isSelected) Color(0xFF53B175) else Color.Black
+                        )
+                    },
+                    selected = isSelected,
+                    onClick = {
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
-}

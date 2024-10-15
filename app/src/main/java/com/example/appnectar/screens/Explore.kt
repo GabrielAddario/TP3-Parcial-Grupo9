@@ -47,6 +47,7 @@ import com.example.appnectar.navController.navs.TopNavbar
 import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.navController.navs.BottomNavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +58,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
 
     Scaffold(
         topBar = { TopNavbar("Find Categories") },
-        bottomBar = { BottomNavBar(navController)}
+        bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         Column(modifier = Modifier
             .padding(paddingValues)
@@ -88,7 +89,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFF5F5F5),
+                    backgroundColor = Color(0xFFF5F5F5),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     cursorColor = textColor

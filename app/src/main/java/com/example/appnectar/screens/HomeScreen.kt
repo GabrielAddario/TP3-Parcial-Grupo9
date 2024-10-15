@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.BestSelling
 import com.example.appnectar.dataClass.ExclusiveOffer
@@ -50,6 +51,7 @@ private fun HomeScreenContent(navController: NavController, isDarkModeEnabled: B
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     var searchQuery by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = { TopNavbar("Shop") },
         bottomBar = { BottomNavBar(navController) }

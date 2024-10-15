@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.FavoriteItems
 import com.example.appnectar.dataClass.Product
@@ -31,9 +33,11 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
+
+
     Scaffold(
         topBar = { TopNavbar("Favorites") },
-        bottomBar = {  BottomNavBar(navController)  }
+        bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         Box(modifier = Modifier
             .fillMaxSize()
