@@ -134,7 +134,7 @@ fun MenuItem(icon: Int, label: String, textColor: Color) {
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(painter = painterResource(id = icon), contentDescription = label, modifier = Modifier.size(28.dp))
+        Icon(painter = painterResource(id = icon), tint = textColor, contentDescription = label, modifier = Modifier.size(28.dp))
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = label, fontSize = 20.sp, color = textColor, modifier = Modifier.weight(1f))
         Icon(

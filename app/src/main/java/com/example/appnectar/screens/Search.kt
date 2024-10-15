@@ -44,16 +44,16 @@ import com.example.appnectar.dataClass.SearchCarts
 import com.example.appnectar.navController.navs.TopNavbar
 
 @Composable
-fun ProductListScreenPreview(navController: NavHostController) {
-    ProductListScreen(navController)
+fun ProductListScreenPreview(navController: NavHostController, isDarkModeEnabled: Boolean) {
+    ProductListScreen(navController, isDarkModeEnabled)
 }
 
 @Composable
-private fun ProductListScreen(navController: NavHostController) {
+private fun ProductListScreen(navController: NavHostController, isDarkModeEnabled: Boolean) {
     val products = SearchCarts
 
     Scaffold(
-        topBar = { TopNavbar("Search") },
+        topBar = { TopNavbar("Search", isDarkModeEnabled) },
         bottomBar = { }
     ) { paddingValues ->
         Column(

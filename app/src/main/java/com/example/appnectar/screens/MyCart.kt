@@ -41,7 +41,7 @@ fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean) {
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
-        topBar = { TopNavbar("My Cart") },
+        topBar = { TopNavbar("My Cart", isDarkModeEnabled) },
         bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         Box(modifier = Modifier

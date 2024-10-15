@@ -60,7 +60,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
     val textColor = if (isDarkModeEnabled) Color.Black else Color.Black
 
     Scaffold(
-        topBar = { TopNavbar("Find Categories") },
+        topBar = { TopNavbar("Find Categories", isDarkModeEnabled)},
         bottomBar = { BottomNavBar(navController)}
     ) { paddingValues ->
         Column(modifier = Modifier

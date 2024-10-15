@@ -33,7 +33,7 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
-        topBar = { TopNavbar("Favorites") },
+        topBar = { TopNavbar("Favorites", isDarkModeEnabled) },
         bottomBar = {  BottomNavBar(navController)  }
     ) { paddingValues ->
         Box(modifier = Modifier
