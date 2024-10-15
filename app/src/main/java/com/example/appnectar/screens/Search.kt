@@ -41,25 +41,21 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.SearchCarts
+import com.example.appnectar.navController.navs.BottomNavBar
 import com.example.appnectar.navController.navs.TopNavbar
 
 @Composable
-fun ProductListScreenPreview(navController: NavHostController, searchQuery: String) {
-    ProductListScreen(navController, searchQuery)
+fun ProductListScreenPreview(navController: NavHostController, isDarkModeEnabled: Boolean) {
+    ProductListScreen(navController, isDarkModeEnabled)
 }
 
 @Composable
-private fun ProductListScreen(navController: NavHostController, searchQuery: String) {
-    val products = SearchCarts // Lista completa de productos
-    val filteredProducts = products.filter { product ->
-        // Filtra por título o descripción
-        product.title.contains(searchQuery, ignoreCase = true) ||
-                product.description.contains(searchQuery, ignoreCase = true) // Asegúrate de que tu clase Product tenga un campo description
-    }
+private fun ProductListScreen(navController: NavHostController, isDarkModeEnabled: Boolean) {
+    val products = SearchCarts
 
     Scaffold(
-        topBar = { TopNavbar("Search") },
-        bottomBar = { }
+        topBar = { TopNavbar("Search", isDarkModeEnabled) },
+        bottomBar = { BottomNavBar(navController) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -67,13 +63,13 @@ private fun ProductListScreen(navController: NavHostController, searchQuery: Str
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            SearchBar(searchText = remember { mutableStateOf(TextFieldValue(searchQuery)) }) // Inicializa la barra de búsqueda
+            SearchBar(navController)
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f)
             ) {
-                items(filteredProducts) { product -> // Muestra la lista filtrada
+                items(products) { product ->
                     CardProduct(product = product)
                 }
             }
@@ -82,7 +78,9 @@ private fun ProductListScreen(navController: NavHostController, searchQuery: Str
 }
 
 @Composable
-fun SearchBar(searchText: MutableState<TextFieldValue>) {
+fun SearchBar(navController: NavController) {
+    val searchText = remember { mutableStateOf(TextFieldValue("")) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -100,15 +98,6 @@ fun SearchBar(searchText: MutableState<TextFieldValue>) {
             value = searchText.value,
             onValueChange = { searchText.value = it },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done // Cambia a Done
-            ),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    // Evitar salto de línea al presionar Enter
-                    // Aquí no se hace nada
-                }
-            ),
             decorationBox = { innerTextField ->
                 if (searchText.value.text.isEmpty()) {
                     Text(text = "Egg", color = Color.Gray)

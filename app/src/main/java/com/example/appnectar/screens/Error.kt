@@ -73,7 +73,8 @@ private fun ErrorPopUp(
                         IconButton(onClick = onRetry) {
                             Icon(
                                 imageVector = Icons.Default.Close,
-                                contentDescription = "Close"
+                                contentDescription = "Close",
+                                tint = textColor
                             )
                         }
                     }

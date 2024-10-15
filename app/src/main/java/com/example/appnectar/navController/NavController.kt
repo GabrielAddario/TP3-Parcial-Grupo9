@@ -63,10 +63,7 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
                 AccountScreenPreview(navController, isDarkModeEnabled, onDarkModeToggle)
             }
         }
-        composable("search_screen/{searchQuery}") { backStackEntry ->
-            val searchQuery = backStackEntry.arguments?.getString("searchQuery") ?: ""
-            ProductListScreenPreview(navController, searchQuery)
-        }
+        composable("search_screen") { ProductListScreenPreview(navController, isDarkModeEnabled) }
         composable("categories_screen/{category}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")?.let { Category.valueOf(it) }
             category?.let {

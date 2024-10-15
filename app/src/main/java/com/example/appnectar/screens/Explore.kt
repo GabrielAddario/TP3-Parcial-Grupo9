@@ -69,7 +69,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
-                    .clickable {  navController.navigate("search_screen/${searchQuery}")},
+                    .clickable {  navController.navigate("search_screen")},
                 shape = RoundedCornerShape(8.dp),
                 textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
                 leadingIcon = {
