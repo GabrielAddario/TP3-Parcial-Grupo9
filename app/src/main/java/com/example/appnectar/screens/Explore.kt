@@ -104,6 +104,7 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
             ) {
                 items(Category.values().filter { it.name.contains(searchQuery, ignoreCase = true) }) { category ->
                     CategoryCard(
+                        navController = navController,
                         category = category,
                         textColor = textColor
                     )
@@ -114,14 +115,14 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
 }
 
 @Composable
-private fun CategoryCard(category: Category, textColor: Color) {
+private fun CategoryCard(category: Category, navController: NavController, textColor: Color) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .width(175.5.dp)
             .height(189.11.dp)
             .padding(8.dp)
-            .clickable { },
+            .clickable { navigateToCategory(navController, category) },
         colors = CardDefaults.cardColors(containerColor = category.color)
     ) {
         Column(

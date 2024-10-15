@@ -65,10 +65,9 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
         }
         composable("search_screen") { ProductListScreenPreview(navController, isDarkModeEnabled) }
         composable("categories_screen/{category}") { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category")?.let { Category.valueOf(it) }
-            category?.let {
-                ProductsByCategoryScreen(navController, it, isDarkModeEnabled)
-            }
+            val categoryName = backStackEntry.arguments?.getString("category")
+            val category = categoryName?.let { Category.valueOf(it) } ?: Category.OTHER // Manejo de nulos
+            ProductsByCategoryScreen(navController, category, isDarkModeEnabled)
         }
         composable("error_screen") { ErrorScreenPreview(navController, isDarkModeEnabled) }
     }

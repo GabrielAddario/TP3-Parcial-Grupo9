@@ -61,8 +61,7 @@ fun ProductsByCategoryScreen(navController: NavController, category: Category, i
                             tint = textColor,
                             modifier = Modifier
                                 .size(18.dp)
-                                .clickable { navigateHomeScreen(navController) }
-//                                .align(Alignment.TopStart)
+                                .clickable { navigateExplore(navController) }
                         )
                     }
                 },
@@ -113,17 +112,15 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                     .clickable { navigateProductDetails(navController, product.id) },
                 contentAlignment = Alignment.Center
             ) {
-                // Imagen del producto
                 Image(
                     painter = painterResource(id = product.image),
                     contentDescription = "Product Image",
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Crop
                 )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Nombre del producto
             Text(
                 text = product.title,
                 fontSize = 14.sp,
@@ -134,7 +131,6 @@ private fun ProductCard(product: Product, navController: NavController, textColo
 
             Spacer(modifier = Modifier.padding(2.dp))
 
-            // Detalles del producto
             Text(
                 text = "${product.cant}${product.typeSizes}, Price",
                 fontSize = 15.sp,
@@ -145,7 +141,6 @@ private fun ProductCard(product: Product, navController: NavController, textColo
 
             Spacer(modifier = Modifier.padding(8.dp))
 
-            // Precio y botón de agregar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -185,8 +180,8 @@ private fun ProductCard(product: Product, navController: NavController, textColo
 //    ProductsByCategoryScreen(category = Category.BEVERAGES)
 //}
 
-private fun navigateHomeScreen(navController: NavController) {
-    navController.navigate("home_screen") {
+private fun navigateExplore(navController: NavController) {
+    navController.navigate("explore_screen") {
     }
 }
 
