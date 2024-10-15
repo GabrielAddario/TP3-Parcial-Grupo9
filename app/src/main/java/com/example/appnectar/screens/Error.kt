@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
@@ -36,7 +36,6 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 private fun ErrorPopUp(
-    navController: NavController,
     onRetry: () -> Unit,
     onBackToHome: () -> Unit,
     showDialog: Boolean,
@@ -50,11 +49,13 @@ private fun ErrorPopUp(
             Card(
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .height(600.dp)
+                    .padding(16.dp)
+                    .background(Color.Transparent),
+                shape = RoundedCornerShape(18.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(8.dp)
-            ) {
+            ){
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -72,11 +73,13 @@ private fun ErrorPopUp(
                             )
                         }
                     }
+
                     Image(
                         painter = painterResource(id = R.drawable.error_logo),
                         contentDescription = "Error Icon",
                         modifier = Modifier
-                            .size(120.dp)
+                            .width(222.dp)
+                            .height(222.dp)
                             .padding(8.dp)
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -87,16 +90,20 @@ private fun ErrorPopUp(
                         color = Color.Black
                     )
                     Text(
-                        text = "Something went terribly wrong.",
+                        text = "Something went tembly wrong.",
                         fontSize = 14.sp,
                         color = Color.Gray,
                         modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
                     )
+
+                    Spacer(modifier = Modifier.height(36.dp))
+
                     Button(
                         onClick = onRetry,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp),
+                            .height(50.dp)
+                            .width(67.dp),
                         shape = RoundedCornerShape(19.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF53B175))
                     ) {
@@ -112,13 +119,16 @@ private fun ErrorPopUp(
     }
 }
 
-
+@Preview
 @Composable
-fun ErrorScreenPreview(navController: NavController) {
+fun ErrorScreenPreview() {
     var showErrorDialog by remember { mutableStateOf(true) }
-    ErrorPopUp( navController,
-        onRetry = { navController.navigate("favourite_screen") },
-        onBackToHome = { navController.navigate("home_screen") },
+    ErrorPopUp(
+        onRetry = { //navController.navigate("favourite_screen")
+             },
+        onBackToHome = {
+            //navController.navigate("home_screen")
+                       },
         showDialog = showErrorDialog,
         onDismiss = { showErrorDialog = false }
     )
