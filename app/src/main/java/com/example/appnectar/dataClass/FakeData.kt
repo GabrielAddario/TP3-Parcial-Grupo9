@@ -16,6 +16,12 @@ var ProductListItems = listOf(
     Product(9, R.drawable.mayonesa, "Mayonesa", 34.5, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.OTHER ,1, TypeSizes.kg, 10),
     Product(10, R.drawable.fideos, "Fideos", 32.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.OTHER,1, TypeSizes.kg, 10),
     Product(11, R.drawable.manzana, "Manzana", 45.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.FRUITS_VEGETABLES,2, TypeSizes.kg, 10),
+    Product(12, R.drawable.milk, "Leche", 15.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.DAIRY_EGGS,1, TypeSizes.L, 10),
+    Product(13, R.drawable.beef, "Beef", 60.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.MEAT_FISH,2, TypeSizes.kg, 10),
+    Product(14, R.drawable.chicken, "Chicken", 55.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.MEAT_FISH,2, TypeSizes.kg, 10),
+    Product(15, R.drawable.oil_ghee_categories, "Aceite", 45.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.OIL_GHEE,750, TypeSizes.ml, 10),
+    Product(16, R.drawable.pan, "Pan", 5.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.BAKERY_SNACKS,1, TypeSizes.kg, 10),
+    Product(17, R.drawable.cookies, "Cookies", 18.0, "Apples are nutritious. Apples may be good for weight loss. apples may be good for your heart. As part of a healtful and varied diet.", Category.BAKERY_SNACKS,450, TypeSizes.gm, 10),
 )
 
 val FavoriteItems = listOf(

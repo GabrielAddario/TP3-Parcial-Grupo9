@@ -171,7 +171,7 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                     Spacer(modifier = Modifier.height(180.dp))
 
                     Button(
-                        onClick = { },
+                        onClick = { navigateSearchScreen(navController) },
                         shape = RoundedCornerShape(30),
                         colors = ButtonDefaults.buttonColors(Color(0xFF53B175)),
                         contentPadding = PaddingValues(),
@@ -203,6 +203,11 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
 
 private fun navigateExploreScreen(navController: NavController) {
     navController.navigate("explore_screen") {
+    }
+}
+
+private fun navigateSearchScreen(navController: NavController) {
+    navController.navigate("search_screen") {
     }
 }
 

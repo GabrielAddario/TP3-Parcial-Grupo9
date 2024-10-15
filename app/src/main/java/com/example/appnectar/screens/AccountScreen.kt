@@ -94,7 +94,7 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
         Spacer(modifier = Modifier.padding(vertical = 15.dp))
 
         Button(
-            onClick = { },
+            onClick = { navigateSignIn(navController) },
             modifier = Modifier
                 .width(364.dp)
                 .height(67.dp),
@@ -113,7 +113,6 @@ fun AccountScreen(navController : NavController, isDarkModeEnabled: Boolean, onD
                         contentDescription = "Log Out",
                         tint = Color(0xFF53B175),
                         modifier = Modifier.size(24.dp)
-                            .clickable { navController.navigate("sign_in") }
                     )
                 }
                 Text(
@@ -149,4 +148,9 @@ fun MenuItem(icon: Int, label: String, textColor: Color) {
 @Composable
 fun AccountScreenPreview(navController: NavController, isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Unit) {
     AccountScreen(navController, isDarkModeEnabled, onDarkModeToggle)
+}
+
+private fun navigateSignIn(navController: NavController) {
+    navController.navigate("sign_in") {
+    }
 }

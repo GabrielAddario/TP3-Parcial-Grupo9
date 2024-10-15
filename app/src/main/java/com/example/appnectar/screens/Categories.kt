@@ -115,7 +115,9 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                 Image(
                     painter = painterResource(id = product.image),
                     contentDescription = "Product Image",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
                 )
             }
 
@@ -126,7 +128,8 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = Color.Black
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
