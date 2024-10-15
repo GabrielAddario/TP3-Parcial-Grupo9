@@ -173,7 +173,7 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                     }
 
                     // Spacer to add space between content and button
-                    Spacer(modifier = Modifier.height(260.dp))
+                    Spacer(modifier = Modifier.height(220.dp))
 
                     Button(
                         onClick = { },
@@ -190,6 +190,8 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                             color = Color.White
                         )
                     }
+
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     // Box to select the white space below the button and make it light gray
                     Box(
