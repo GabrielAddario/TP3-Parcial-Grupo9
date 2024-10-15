@@ -17,8 +17,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
@@ -44,12 +42,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appnectar.dataClass.Category
 import com.example.appnectar.navController.navs.TopNavbar
-import androidx.compose.material.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
 import com.example.appnectar.navController.navs.BottomNavBar
 
@@ -72,15 +68,10 @@ private fun ExploreContent(navController: NavController, isDarkModeEnabled: Bool
                 placeholder = { Text("Search Store", fontSize = 15.sp, fontWeight = FontWeight.Light, color = textColor) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = 16.dp)
+                    .clickable {  navController.navigate("search_screen/${searchQuery}")},
                 shape = RoundedCornerShape(8.dp),
                 textStyle = LocalTextStyle.current.copy(fontSize = 12.sp, color = textColor),
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        navController.navigate("search_screen")
-                    }
-                ),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,

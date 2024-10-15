@@ -119,15 +119,13 @@ private fun ErrorPopUp(
     }
 }
 
-@Preview
 @Composable
-fun ErrorScreenPreview() {
+fun ErrorScreenPreview(navController: NavController) {
     var showErrorDialog by remember { mutableStateOf(true) }
     ErrorPopUp(
-        onRetry = { //navController.navigate("favourite_screen")
+        onRetry = { navController.navigate("favourite_screen")
              },
-        onBackToHome = {
-            //navController.navigate("home_screen")
+        onBackToHome = { navController.navigate("home_screen")
                        },
         showDialog = showErrorDialog,
         onDismiss = { showErrorDialog = false }

@@ -13,16 +13,15 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import com.example.appnectar.dataClass.Product
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -44,13 +42,18 @@ import com.example.appnectar.dataClass.SearchCarts
 import com.example.appnectar.navController.navs.TopNavbar
 
 @Composable
-fun ProductListScreenPreview(navController: NavHostController) {
-    ProductListScreen(navController)
+fun ProductListScreenPreview(navController: NavHostController, searchQuery: String) {
+    ProductListScreen(navController, searchQuery)
 }
 
 @Composable
-private fun ProductListScreen(navController: NavHostController) {
-    val products = SearchCarts
+private fun ProductListScreen(navController: NavHostController, searchQuery: String) {
+    val products = SearchCarts // Lista completa de productos
+    val filteredProducts = products.filter { product ->
+        // Filtra por título o descripción
+        product.title.contains(searchQuery, ignoreCase = true) ||
+                product.description.contains(searchQuery, ignoreCase = true) // Asegúrate de que tu clase Product tenga un campo description
+    }
 
     Scaffold(
         topBar = { TopNavbar("Search") },
@@ -62,13 +65,13 @@ private fun ProductListScreen(navController: NavHostController) {
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            SearchBar(navController)
+            SearchBar(searchText = remember { mutableStateOf(TextFieldValue(searchQuery)) }) // Inicializa la barra de búsqueda
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f)
             ) {
-                items(products) { product ->
+                items(filteredProducts) { product -> // Muestra la lista filtrada
                     CardProduct(product = product)
                 }
             }
@@ -77,9 +80,7 @@ private fun ProductListScreen(navController: NavHostController) {
 }
 
 @Composable
-fun SearchBar(navController: NavController) {
-    val searchText = remember { mutableStateOf(TextFieldValue("")) }
-
+fun SearchBar(searchText: MutableState<TextFieldValue>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,9 +98,18 @@ fun SearchBar(navController: NavController) {
             value = searchText.value,
             onValueChange = { searchText.value = it },
             modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done // Cambia a Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    // Evitar salto de línea al presionar Enter
+                    // Aquí no se hace nada
+                }
+            ),
             decorationBox = { innerTextField ->
                 if (searchText.value.text.isEmpty()) {
-                    Text(text = "Egg", color = Color.Gray)
+                    Text(text = "Buscar productos", color = Color.Gray)
                 }
                 innerTextField()
             }
