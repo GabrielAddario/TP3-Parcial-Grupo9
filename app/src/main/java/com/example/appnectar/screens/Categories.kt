@@ -20,7 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -29,12 +28,6 @@ import com.example.appnectar.dataClass.Category
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.dataClass.ProductListItems
 
-@Composable
-fun CategoriesScreenPreview(
-    navController: NavController, category: Category,  isDarkModeEnabled: Boolean
-) {
-    CategoriesScreenPreview(navController, category, isDarkModeEnabled)
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,20 +47,18 @@ fun ProductsByCategoryScreen(navController: NavController, category: Category, i
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Acción del botón atrás */ }) {
+                    IconButton(onClick = { navigateExplore(navController)}) {
                         Icon(
                             imageVector = Icons.Default.ArrowBackIos,
                             contentDescription = "Back",
                             tint = textColor,
                             modifier = Modifier
                                 .size(18.dp)
-                                .clickable { navigateExplore(navController) }
                         )
                     }
                 },
             )
         },
-        bottomBar = { }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -82,7 +73,7 @@ fun ProductsByCategoryScreen(navController: NavController, category: Category, i
                 contentPadding = PaddingValues(8.dp),
             ) {
                 items(products) { product ->
-                    ProductCard(product = product, navController, textColor, backgroundColor)
+                    ProductCard(product = product, navController, backgroundColor, textColor)
                 }
             }
         }
@@ -90,13 +81,13 @@ fun ProductsByCategoryScreen(navController: NavController, category: Category, i
 }
 
 @Composable
-private fun ProductCard(product: Product, navController: NavController, textColor: Color, backgroundColor: Color) {
+private fun ProductCard(product: Product, navController: NavController, backgroundColor: Color, textColor: Color) {
     Card(
         modifier = Modifier
             .width(160.dp)
             .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
@@ -127,9 +118,10 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                 text = product.title,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .clickable { navigateProductDetails(navController, product.id)  },
                 textAlign = TextAlign.Start,
-                color = Color.Black
+                color = textColor,
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
@@ -137,7 +129,7 @@ private fun ProductCard(product: Product, navController: NavController, textColo
             Text(
                 text = "${product.cant}${product.typeSizes}, Price",
                 fontSize = 15.sp,
-                color = Color.Gray,
+                color = textColor,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
             )
@@ -153,7 +145,7 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                     text = "$${product.price}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+                    color = textColor,
                     lineHeight = 27.sp,
                     textAlign = TextAlign.End
                 )
@@ -165,7 +157,7 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.boton_agregar), // Replace with your button image resource
+                        painter = painterResource(id = R.drawable.boton_agregar),
                         contentDescription = "Button",
                         modifier = Modifier
                             .size(45.dp)
@@ -176,12 +168,6 @@ private fun ProductCard(product: Product, navController: NavController, textColo
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ProductsByCategoryScreenPreview() {
-//    ProductsByCategoryScreen(category = Category.BEVERAGES)
-//}
 
 private fun navigateExplore(navController: NavController) {
     navController.navigate("explore_screen") {

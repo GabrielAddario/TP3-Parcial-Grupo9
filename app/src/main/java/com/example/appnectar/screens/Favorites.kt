@@ -2,6 +2,7 @@ package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -78,7 +79,8 @@ fun CardProduct(navController: NavController, product: Product, textColor: Color
         modifier = Modifier
             .width(363.dp)
             .height(100.dp)
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .clickable {navigateProductDetails(navController, product.id)  },
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Row(

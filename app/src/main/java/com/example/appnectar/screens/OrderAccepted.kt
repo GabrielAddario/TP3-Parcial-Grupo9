@@ -22,9 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
 
-//@Preview(showBackground = true)
 @Composable
-fun PreviewOrderAcceptedScreen(navController: NavController, isDarkModeEnabled: Boolean) {
+fun PreviewOrderAcceptedScreen(navController: NavController) {
     OrderAcceptedScreen(navController)
 }
 
@@ -68,7 +67,6 @@ private fun OrderAcceptedScreen(navController: NavController) {
                 textAlign = TextAlign.Center
             )
 
-            // Texto secundario
             Text(
                 text = "Your items has been placed and is on it's way to being processed",
                 fontSize = 16.sp,

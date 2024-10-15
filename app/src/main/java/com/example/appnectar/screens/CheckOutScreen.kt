@@ -103,9 +103,9 @@ fun CheckOutScreen(
                     Text(text = "Payment", fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.weight(1f))
                     Image(
-                        painter = painterResource(id = R.drawable.card_logo), // Reemplaza con el ID de tu imagen
+                        painter = painterResource(id = R.drawable.card_logo),
                         contentDescription = "Card Logo",
-                        modifier = Modifier.size(24.dp) // Ajusta el tamaño según sea necesario
+                        modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(

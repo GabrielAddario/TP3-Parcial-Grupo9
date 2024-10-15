@@ -1,4 +1,4 @@
-package com.example.appnectar.viewmodel
+package com.example.appnectar.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -51,12 +51,7 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
             val totalCost = backStackEntry.arguments?.getString("totalCost")?.toDoubleOrNull() ?: 0.0
             CheckoutScreenPreview(navController, isDarkModeEnabled, totalCost)
         }
-        composable("order_accepted") {
-            PreviewOrderAcceptedScreen(
-                navController,
-                isDarkModeEnabled
-            )
-        }
+        composable("order_accepted") { PreviewOrderAcceptedScreen(navController) }
         composable("filters") { FilterScreenPreview(navController, isDarkModeEnabled) }
         composable("account_screen") {
             MainScreen(navController) {
@@ -66,7 +61,7 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
         composable("search_screen") { ProductListScreenPreview(navController, isDarkModeEnabled) }
         composable("categories_screen/{category}") { backStackEntry ->
             val categoryName = backStackEntry.arguments?.getString("category")
-            val category = categoryName?.let { Category.valueOf(it) } ?: Category.OTHER // Manejo de nulos
+            val category = categoryName?.let { Category.valueOf(it) } ?: Category.OTHER
             ProductsByCategoryScreen(navController, category, isDarkModeEnabled)
         }
         composable("error_screen") { ErrorScreenPreview(navController, isDarkModeEnabled) }

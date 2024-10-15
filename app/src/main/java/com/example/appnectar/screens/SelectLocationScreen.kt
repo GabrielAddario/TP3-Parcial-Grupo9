@@ -75,7 +75,6 @@ private fun SelectLocationScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Dropdown para seleccionar el barrio
         Box {
             ExposedDropdownMenuBox(
                 expanded = expanded,
@@ -125,7 +124,6 @@ private fun SelectLocationScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // TextField para ingresar el área
         TextField(
             value = area,
             onValueChange = { area = it },
@@ -139,7 +137,6 @@ private fun SelectLocationScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        // Botón que navega a la pantalla de inicio
         Button(
             onClick = {
                 navigateHomeScreen(navController, selectedBarrio)

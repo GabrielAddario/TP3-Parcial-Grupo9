@@ -1,7 +1,6 @@
 package com.example.appnectar.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
@@ -25,14 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.appnectar.R
 import com.example.appnectar.dataClass.Product
 import com.example.appnectar.navController.navs.TopNavbar
-import com.example.appnectar.dataClass.MyCarts
 import com.example.appnectar.navController.navs.BottomNavBar
-import com.example.appnectar.viewmodel.CartViewModel
+import com.example.appnectar.viewModel.CartViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MyCartScreen(navController: NavController, isDarkModeEnabled: Boolean, cartViewModel: CartViewModel = viewModel()) {
     val products by cartViewModel.products.collectAsState()
@@ -121,7 +117,8 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = product.title,
-                modifier = Modifier.size(70.dp) // Increased size
+                modifier = Modifier.size(70.dp)
+                    .clickable { navigateProductDetails(navController, product.id) }
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(
@@ -140,7 +137,8 @@ private fun ProductCard(product: Product, textColor: Color, backgroundColor: Col
                         fontWeight = FontWeight.Bold,
                         color = textColor,
                         lineHeight = 18.sp,
-                        textAlign = TextAlign.Start
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.clickable {navigateProductDetails(navController, product.id) }
                     )
                     Icon(
                         imageVector = Icons.Default.Close,

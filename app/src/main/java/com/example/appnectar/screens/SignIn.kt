@@ -195,8 +195,8 @@ private fun loginUser(email : String, password : String, context: Context, navCo
             }
         })
     }
+    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
 }
-
 
 private fun navigateSignUp(navController: NavController) {
     navController.navigate("sign_up") {

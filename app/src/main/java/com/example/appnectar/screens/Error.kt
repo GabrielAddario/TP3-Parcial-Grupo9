@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.appnectar.R
@@ -124,7 +123,6 @@ private fun ErrorPopUp(
     }
 }
 
-//@Preview
 @Composable
 fun ErrorScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) {
     var showErrorDialog by remember { mutableStateOf(true) }

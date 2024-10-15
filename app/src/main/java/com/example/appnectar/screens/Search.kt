@@ -10,14 +10,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import com.example.appnectar.dataClass.Product
 import androidx.compose.material3.Scaffold
@@ -31,10 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,6 +46,8 @@ fun ProductListScreenPreview(navController: NavHostController, isDarkModeEnabled
 @Composable
 private fun ProductListScreen(navController: NavHostController, isDarkModeEnabled: Boolean) {
     val products = SearchCarts
+    val textColor = if (isDarkModeEnabled) Color.White else Color.Black
+    val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
 
     Scaffold(
         topBar = { TopNavbar("Search", isDarkModeEnabled) },
@@ -63,14 +59,14 @@ private fun ProductListScreen(navController: NavHostController, isDarkModeEnable
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            SearchBar(navController)
+            SearchBar()
             Spacer(modifier = Modifier.height(16.dp))
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.weight(1f)
             ) {
                 items(products) { product ->
-                    CardProduct(product = product)
+                    CardProduct(product = product, navController, backgroundColor, textColor)
                 }
             }
         }
@@ -78,7 +74,7 @@ private fun ProductListScreen(navController: NavHostController, isDarkModeEnable
 }
 
 @Composable
-fun SearchBar(navController: NavController) {
+fun SearchBar() {
     val searchText = remember { mutableStateOf(TextFieldValue("")) }
 
     Row(
@@ -109,13 +105,13 @@ fun SearchBar(navController: NavController) {
 }
 
 @Composable
-private fun CardProduct(product: Product) {
+private fun CardProduct(product: Product, navController: NavController, backgroundColor: Color, textColor : Color) {
     Card(
         modifier = Modifier
             .width(160.dp)
             .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
@@ -124,7 +120,7 @@ private fun CardProduct(product: Product) {
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Imagen del producto
+
             Image(
                 painter = painterResource(id = product.image),
                 contentDescription = "Product Image",
@@ -134,29 +130,27 @@ private fun CardProduct(product: Product) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Nombre del producto
             Text(
                 text = product.title,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = textColor
             )
 
             Spacer(modifier = Modifier.padding(2.dp))
 
-            // Detalles del producto
             Text(
                 text = "${product.cant}${product.typeSizes}, Price",
                 fontSize = 15.sp,
-                color = Color.Gray,
+                color = textColor,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
             )
 
             Spacer(modifier = Modifier.padding(8.dp))
 
-            // Precio y botón de agregar
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -166,7 +160,7 @@ private fun CardProduct(product: Product) {
                     text = "$${product.price}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+                    color = textColor,
                     lineHeight = 27.sp,
                     textAlign = TextAlign.End
                 )
@@ -178,14 +172,19 @@ private fun CardProduct(product: Product) {
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.boton_agregar), // Replace with your button image resource
+                        painter = painterResource(id = R.drawable.boton_agregar),
                         contentDescription = "Button",
                         modifier = Modifier
                             .size(45.dp)
-                            .clickable { /* Hay que agregar el producto al carrito*/ }
+                            .clickable { navigateMyCartScreen(navController) }
                     )
                 }
             }
         }
+    }
+}
+
+private fun navigateMyCartScreen(navController: NavController) {
+    navController.navigate("my_cart_screen") {
     }
 }

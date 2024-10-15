@@ -17,21 +17,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.appnectar.R
 import com.example.appnectar.dataClass.BestSelling
 import com.example.appnectar.dataClass.ExclusiveOffer
@@ -49,8 +43,6 @@ fun HomeScreenPreview(navController: NavController, isDarkModeEnabled: Boolean) 
 private fun HomeScreenContent(navController: NavController, isDarkModeEnabled: Boolean) {
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
-
-    var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = { TopNavbar("Shop", isDarkModeEnabled) },
@@ -76,13 +68,11 @@ private fun HomeScreenContent(navController: NavController, isDarkModeEnabled: B
                     .padding(bottom = 16.dp)
             )
 
-            // Imagen de banner_homescreen
             Image(
                 painter = painterResource(id = R.drawable.banner_homescreen),
                 contentDescription = "Home Screen Banner",
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.height(200.dp)
                     .padding(bottom = 16.dp),
                 contentScale = ContentScale.Crop
             )
@@ -182,13 +172,13 @@ private fun ProductCard(product: Product, navController: NavController, textColo
                     lineHeight = 18.sp,
                     textAlign = TextAlign.Start
                 )
-                Spacer(modifier = Modifier.width(8.dp)) // Adjusted Spacer width
+                Spacer(modifier = Modifier.width(8.dp))
                 Image(
-                    painter = painterResource(id = R.drawable.boton_agregar), // Replace with your button image resource
+                    painter = painterResource(id = R.drawable.boton_agregar),
                     contentDescription = "Button",
                     modifier = Modifier
                         .size(45.dp)
-                        .clickable { /* Hay que agregar el producto al carrito*/ }
+                        .clickable { navigateMyCart(navController)}
                 )
             }
         }
@@ -197,4 +187,8 @@ private fun ProductCard(product: Product, navController: NavController, textColo
 
 private fun navigateProductDetails(navController: NavController, productId: Int) {
     navController.navigate("product_details/$productId")
+}
+
+private fun navigateMyCart(navController: NavController) {
+    navController.navigate("my_cart_screen")
 }

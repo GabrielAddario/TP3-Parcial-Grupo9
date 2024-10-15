@@ -9,13 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 
@@ -79,7 +75,7 @@ fun TopNavbar(titleText: String, isDarkModeEnabled: Boolean) {
     HorizontalDivider(color = Color.Gray, thickness = 1.dp)
 }
 
-@Preview(showBackground = true)
+
 @Composable
 fun TopNavbarPreview() {
     TopNavbar(titleText = String(), isDarkModeEnabled = false)

@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -163,7 +162,7 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
                                         color = if (brandsState[index]) Color(0xFF00A86B) else textColor
                                     )
                                 }
-                                Spacer(modifier = Modifier.height(4.dp)) // Espacio entre los elementos de la checklist
+                                Spacer(modifier = Modifier.height(4.dp))
                             }
                         }
                     }
@@ -188,7 +187,6 @@ private fun FilterScreen(navController: NavController, isDarkModeEnabled: Boolea
 
                     Spacer(modifier = Modifier.height(30.dp))
 
-                    // Box to select the white space below the button and make it light gray
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -218,11 +216,10 @@ private fun RoundedCornerCheckbox(
 ) {
     Box(
         modifier = Modifier
-            .size(30.dp) // Tamaño del contenedor del checkbox
+            .size(30.dp)
             .clickable { onCheckedChange?.invoke(!checked) }
             .padding(4.dp)
     ) {
-        // Fondo redondeado
         Box(
             modifier = Modifier
                 .size(30.dp)
