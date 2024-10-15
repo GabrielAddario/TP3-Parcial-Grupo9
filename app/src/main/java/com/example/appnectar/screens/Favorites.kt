@@ -2,7 +2,6 @@ package com.example.appnectar.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +30,8 @@ fun FavouriteScreen(navController: NavController, isDarkModeEnabled: Boolean) {
 
     val textColor = if (isDarkModeEnabled) Color.White else Color.Black
     val backgroundColor = if (isDarkModeEnabled) Color(0xFF1E1E1E) else Color.White
+
+
 
     Scaffold(
         topBar = { TopNavbar("Favorites", isDarkModeEnabled) },

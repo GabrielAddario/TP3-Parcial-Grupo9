@@ -47,7 +47,10 @@ fun NavController(isDarkModeEnabled: Boolean, onDarkModeToggle: (Boolean) -> Uni
             val productId = backStackEntry.arguments?.getString("productId")
             ProductDetailScreenPreview(navController = navController, productId, isDarkModeEnabled)
         }
-        composable("checkout_screen") { CheckoutScreenPreview(navController, isDarkModeEnabled) }
+        composable("checkout_screen/{totalCost}") { backStackEntry ->
+            val totalCost = backStackEntry.arguments?.getString("totalCost")?.toDoubleOrNull() ?: 0.0
+            CheckoutScreenPreview(navController, isDarkModeEnabled, totalCost)
+        }
         composable("order_accepted") {
             PreviewOrderAcceptedScreen(
                 navController,
